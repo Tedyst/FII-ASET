@@ -47,3 +47,4 @@ Project proposals for DevOps side:
 
 The main repository is available [here](https://github.com/Tedyst/FII-ASET).
 The project board can be found [here](https://github.com/users/Tedyst/projects/1/views/2)
+The technologies used and related work can be found [here](https://docs.google.com/document/d/11urzU0jny9UJrOsGFh4iA7sewAFm6s6af9LfTdxIBcA/edit)
