@@ -34,14 +34,14 @@ Project proposals for DevOps side:
 
 ## Team 
 
-| Nume                                                       | E-Mail                       |             |
+| Nume                                                       | E-Mail                       |              |
 |------------------------------------------------------------|------------------------------|-------------|
-| [Stoica Tedy](https://github.com/Tedyst)                   | stoicatedy@gmail.com         | Coordonator |
-| [Ignat Vlad](https://github.com/ignatrovino12)             | ignatrovino12@gmail.com      |             |
-| [Dan Frunza](https://github.com/DanFrunza)                 | dani.frunza@yahoo.com        |             |
-| [Teodorescu Calin](https://github.com/TeodorescuCalin)     | calin.teodorescu24@gmail.com |             |
-| [Artur-Augustin Bejenari](https://github.com/mikeesnipess) | artur.bejenari00@gmail.com   |             |
-| [Nastase Valentin](https://github.com/nastasevalentin)     | nastasevalentin20@gmail.com  |             |
+| [Stoica Tedy](https://github.com/Tedyst)                   | stoicatedy@gmail.com         | Scrum Master |
+| [Ignat Vlad](https://github.com/ignatrovino12)             | ignatrovino12@gmail.com      |              |
+| [Dan Frunza](https://github.com/DanFrunza)                 | dani.frunza@yahoo.com        |              |
+| [Teodorescu Calin](https://github.com/TeodorescuCalin)     | calin.teodorescu24@gmail.com |              |
+| [Artur-Augustin Bejenari](https://github.com/mikeesnipess) | artur.bejenari00@gmail.com   |              |
+| [Nastase Valentin](https://github.com/nastasevalentin)     | nastasevalentin20@gmail.com  |              |
 
 ## Useful Links
 
