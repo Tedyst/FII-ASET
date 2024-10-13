@@ -48,3 +48,25 @@ Project proposals for DevOps side:
 The main repository is available [here](https://github.com/Tedyst/FII-ASET).
 The project board can be found [here](https://github.com/users/Tedyst/projects/1/views/2)
 The technologies used and related work can be found [here](https://docs.google.com/document/d/11urzU0jny9UJrOsGFh4iA7sewAFm6s6af9LfTdxIBcA/edit)
+
+
+# Using the app
+
+## Installing the app
+
+In order to install the app, you need to use Python 3.12 or higher. You can install it from [here](https://www.python.org/downloads/).
+After you have installed Python, you can install the required packages by running the following command in the root directory of the project:
+
+```bash
+poetry install
+```
+
+## Running the app
+
+In order to run the app, you need to run the following command in the `backend` directory of the project:
+
+```bash
+python manage.py runserver
+```
+
+Be warned that Celery tasks will run in eager mode, meaning that they will run synchronously. If you want to run them asynchronously, you need to install and run a message broker like RabbitMQ or Redis. You can find more information about this [here](https://docs.celeryproject.org/en/stable/getting-started/brokers/).
