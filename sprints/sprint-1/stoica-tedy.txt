@@ -1,0 +1,2 @@
+- creat un VM si instalat k3s folosind Ansible
+- creat structura de baza a aplicatiei

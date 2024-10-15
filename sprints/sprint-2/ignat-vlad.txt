@@ -1,0 +1,2 @@
+- Account Registration and Management Use Case Diagram
+- Market Data Subscription Use Case Diagram

@@ -1,0 +1,121 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36" version="24.7.17">
+  <diagram name="Page-1" id="mzdrqk-MGv7eXxqq_gum">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-1" value="Data Analyst" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="640" y="685" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-2" value="Select Subscription&lt;div&gt;to Real-Time&amp;nbsp;&lt;/div&gt;&lt;div&gt;Data Feed&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;gradientColor=#ea6b66;" vertex="1" parent="1">
+          <mxGeometry x="140" y="260" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-7" value="System" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="640" y="360" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-8" value="Trader" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="-130" y="400" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-13" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" edge="1" parent="1" source="H3BDraYyOw7Ul4LDMulN-7" target="H3BDraYyOw7Ul4LDMulN-41">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="320" y="60" as="sourcePoint" />
+            <mxPoint x="422.6008157535375" y="233.09304106252864" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-14" value="&amp;lt; include &amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="H3BDraYyOw7Ul4LDMulN-2" target="H3BDraYyOw7Ul4LDMulN-41">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="280" y="50" as="sourcePoint" />
+            <mxPoint x="327.2437581995696" y="237.7123789447237" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-27" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" edge="1" parent="1" source="H3BDraYyOw7Ul4LDMulN-7" target="H3BDraYyOw7Ul4LDMulN-44">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="590" y="370" as="sourcePoint" />
+            <mxPoint x="658.7757439906136" y="431.6475976995357" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-29" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" edge="1" parent="1" source="H3BDraYyOw7Ul4LDMulN-1" target="H3BDraYyOw7Ul4LDMulN-50">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="577" y="517" as="sourcePoint" />
+            <mxPoint x="610" y="605" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-41" value="Activate or Deactivate&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;Data Feed&amp;nbsp;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;for User&lt;/span&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=#7ea6e0;" vertex="1" parent="1">
+          <mxGeometry x="400" y="260" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-42" value="Select Subscription&lt;div&gt;to Historical Market&lt;br&gt;&lt;/div&gt;&lt;div&gt;Data Feed&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;gradientColor=#ea6b66;" vertex="1" parent="1">
+          <mxGeometry x="140" y="540" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-44" value="Provide the Historical&lt;div&gt;Data in the Requested Format&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=#7ea6e0;" vertex="1" parent="1">
+          <mxGeometry x="400" y="540" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-45" value="&amp;lt; include &amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="H3BDraYyOw7Ul4LDMulN-42" target="H3BDraYyOw7Ul4LDMulN-44">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="170" y="460" as="sourcePoint" />
+            <mxPoint x="322" y="413" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-46" value="Manage subcriptions&lt;div&gt;( add or remove )&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=#7ea6e0;" vertex="1" parent="1">
+          <mxGeometry x="-20" y="395" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-47" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" edge="1" parent="1" source="H3BDraYyOw7Ul4LDMulN-8" target="H3BDraYyOw7Ul4LDMulN-46">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="-60" y="575" as="sourcePoint" />
+            <mxPoint x="93" y="661" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-48" value="&amp;lt; extend &amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="H3BDraYyOw7Ul4LDMulN-46" target="H3BDraYyOw7Ul4LDMulN-2">
+          <mxGeometry x="-0.0012" width="160" relative="1" as="geometry">
+            <mxPoint x="255" y="190" as="sourcePoint" />
+            <mxPoint x="455" y="200" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-49" value="&amp;lt; extend &amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="H3BDraYyOw7Ul4LDMulN-46" target="H3BDraYyOw7Ul4LDMulN-42">
+          <mxGeometry x="-0.0012" width="160" relative="1" as="geometry">
+            <mxPoint x="340" y="230" as="sourcePoint" />
+            <mxPoint x="540" y="240" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-50" value="Analyze Market Data" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=#7ea6e0;" vertex="1" parent="1">
+          <mxGeometry x="400" y="680" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-53" value="Generate Reports" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;gradientColor=#ea6b66;" vertex="1" parent="1">
+          <mxGeometry x="200" y="800" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-55" value="&amp;lt; extend &amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="H3BDraYyOw7Ul4LDMulN-50" target="H3BDraYyOw7Ul4LDMulN-53">
+          <mxGeometry x="-0.0012" width="160" relative="1" as="geometry">
+            <mxPoint x="640" y="490" as="sourcePoint" />
+            <mxPoint x="820" y="490" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-56" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" edge="1" parent="1" source="H3BDraYyOw7Ul4LDMulN-8" target="H3BDraYyOw7Ul4LDMulN-57">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="-30" y="650" as="sourcePoint" />
+            <mxPoint x="90" y="690" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-57" value="Use Reports&lt;div&gt;for Trading&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=#7ea6e0;" vertex="1" parent="1">
+          <mxGeometry x="-20" y="670" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-58" value="&amp;lt; include &amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="H3BDraYyOw7Ul4LDMulN-57" target="H3BDraYyOw7Ul4LDMulN-53">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="337" y="620" as="sourcePoint" />
+            <mxPoint x="470" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-61" value="Receive alerts for&lt;div&gt;specific events&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=#7ea6e0;" vertex="1" parent="1">
+          <mxGeometry x="-40" y="160" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H3BDraYyOw7Ul4LDMulN-62" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" edge="1" parent="1" source="H3BDraYyOw7Ul4LDMulN-8" target="H3BDraYyOw7Ul4LDMulN-61">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="-30" y="270" as="sourcePoint" />
+            <mxPoint x="20" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

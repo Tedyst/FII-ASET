@@ -1,0 +1,2 @@
+- creat structura de baza a aplicatiei
+- creat documentul de state-of-the-art pe partea de DevOps
