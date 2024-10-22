@@ -1,0 +1,34 @@
+Am folosit AI pentru a primi exemple de diagrame de clase si use-case. Am folosit ChatGPT si am cerut exemple de relatii si actori pe care le-ar putea avea diagramele noastre in fuctie de tema data. 
+Exemplu: 
+Give me an example for this class diagram 
+
+- [ ] Trading Account Management Class Diagram
+
+    - Models the structure of accounts (individual, joint, institutional), including user details, trading permissions, and associated portfolios. Key classes might include Account, Portfolio, Position, and TradeHistory.
+
+Raspunsul a fost:
+
+Classes:
+    Account (Base class for different account types like Individual, Joint, Institutional)
+        Associations:
+            One-to-Many relationship with User
+            One-to-One relationship with Portfolio
+            One-to-Many relationship with TradeHistory
+
+    User (Represents the user of the account)
+        Associations:
+            One-to-Many relationship with Account
+
+    Portfolio (Represents the portfolio associated with the account)
+        Associations:
+            One-to-Many relationship with Position
+
+    Position (Represents the assets held in a portfolio)
+        Associations:
+            Many-to-One relationship with Portfolio
+
+    TradeHistory (Keeps a record of trades made by the account)
+        Associations:
+            Many-to-One relationship with Account
+
+In concluzie AI-ul a fost de ajutor, oferindu-ne exemple pentru diferitele diagrame si cazuri pe care le-am avut.
