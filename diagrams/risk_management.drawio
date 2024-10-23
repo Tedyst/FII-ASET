@@ -1,0 +1,97 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 OPR/114.0.0.0" version="24.8.1">
+  <diagram name="Page-1" id="NVuE5TvLhiOUnO5PBiOL">
+    <mxGraphModel dx="1009" dy="539" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="RiskModel" value="RiskModel" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="100" width="160" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="riskmodel-attr1" value="- riskModelId: String" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;" vertex="1" parent="RiskModel">
+          <mxGeometry x="10" y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="riskmodel-attr2" value="- modelType: String" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;" vertex="1" parent="RiskModel">
+          <mxGeometry x="10" y="50" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="riskmodel-method1" value="+ calculateRisk(): Decimal" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;" vertex="1" parent="RiskModel">
+          <mxGeometry x="10" y="90" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Margin" value="Margin" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="345" y="100" width="160" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="margin-attr1" value="- marginId: String" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;" vertex="1" parent="Margin">
+          <mxGeometry x="10" y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="margin-attr2" value="- initialMargin: Decimal" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;" vertex="1" parent="Margin">
+          <mxGeometry x="10" y="50" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="margin-method1" value="+ calculateMargin(): Decimal" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;" vertex="1" parent="Margin">
+          <mxGeometry x="10" y="90" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Exposure" value="Exposure" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="370" width="160" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="exposure-attr1" value="- exposureId: String" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;" vertex="1" parent="Exposure">
+          <mxGeometry x="10" y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="exposure-attr2" value="- exposureValue: Decimal" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;" vertex="1" parent="Exposure">
+          <mxGeometry x="10" y="50" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="exposure-method1" value="+ getExposure(): Decimal" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;" vertex="1" parent="Exposure">
+          <mxGeometry x="10" y="90" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Leverage" value="Leverage" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="100" width="160" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="leverage-attr1" value="- leverageId: String" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;" vertex="1" parent="Leverage">
+          <mxGeometry x="10" y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="leverage-attr2" value="- leverageRatio: Decimal" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;" vertex="1" parent="Leverage">
+          <mxGeometry x="10" y="50" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="leverage-method1" value="+ calculateLeverage(): Decimal" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;" vertex="1" parent="Leverage">
+          <mxGeometry x="10" y="90" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Limits" value="Limits" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="345" y="370" width="160" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="limits-attr1" value="- limitId: String" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;" vertex="1" parent="Limits">
+          <mxGeometry x="10" y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="limits-attr2" value="- maxExposure: Decimal" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;" vertex="1" parent="Limits">
+          <mxGeometry x="10" y="50" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="limits-method1" value="+ checkLimits(): Boolean" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;" vertex="1" parent="Limits">
+          <mxGeometry x="10" y="90" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="M4jk-arF5E8-hqRREydE-12" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="Exposure" target="RiskModel">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="390" as="sourcePoint" />
+            <mxPoint x="380" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="M4jk-arF5E8-hqRREydE-13" value="" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="250" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="M4jk-arF5E8-hqRREydE-14" value="" style="endArrow=none;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="Limits" target="Margin">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="580" y="310" as="sourcePoint" />
+            <mxPoint x="630" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="M4jk-arF5E8-hqRREydE-16" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Leverage" target="Margin">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="580" y="230" as="sourcePoint" />
+            <mxPoint x="580" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="M4jk-arF5E8-hqRREydE-17" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Limits" target="Exposure">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="340" y="445" as="sourcePoint" />
+            <mxPoint x="200" y="444.58" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
