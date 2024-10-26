@@ -1,2 +1,5 @@
 - creat un VM si instalat k3s folosind Ansible
 - creat structura de baza a aplicatiei
+
+
+Prompt: help me generate a Portfolio Management Class Diagram for a Financial Trading Platform like IBKR
