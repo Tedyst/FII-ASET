@@ -61,6 +61,12 @@ After you have installed Python, you can install the required packages by runnin
 poetry install
 ```
 
+After you have installed the required packages, you need to start the virtual environment by running the following command in the root directory of the project:
+
+```bash
+poetry shell
+```
+
 ## Running the app
 
 In order to run the app, you need to run the following command in the `backend` directory of the project:
