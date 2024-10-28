@@ -66,7 +66,16 @@ poetry install
 In order to run the app, you need to run the following command in the `backend` directory of the project:
 
 ```bash
+python manage.py migrate
 python manage.py runserver
+```
+
+## Making migrations
+
+In order to make migrations (when you change any Model), you need to run the following command in the `backend` directory of the project:
+
+```bash
+python manage.py makemigrations
 ```
 
 Be warned that Celery tasks will run in eager mode, meaning that they will run synchronously. If you want to run them asynchronously, you need to install and run a message broker like RabbitMQ or Redis. You can find more information about this [here](https://docs.celeryproject.org/en/stable/getting-started/brokers/).

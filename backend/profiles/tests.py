@@ -1,3 +1,4 @@
+import decimal
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from .models import *
@@ -46,9 +47,9 @@ class AccountModelTests(TestCase):
         # check if balance respects max_digits and decimal_places
         account = Account.objects.create(owner=self.user, balance=Decimal("123456.78"))
         self.assertEqual(account.balance, Decimal("123456.78"))
-        
-        with self.assertRaises(ValueError):
-            Account.objects.create(owner=self.user, balance=Decimal("1234567.89"))  # More than max_digits
+
+        with self.assertRaises(decimal.InvalidOperation):
+            Account.objects.create(owner=self.user, balance=Decimal("12345678901.89"))  # More than max_digits
 
     def test_account_auto_fields(self):
         # ensure created_at and updated_at fields are set automatically
