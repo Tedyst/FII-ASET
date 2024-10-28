@@ -15,6 +15,7 @@ class Ticker(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
 
 
 class TickerHistory(models.Model):
@@ -34,7 +35,13 @@ class Position(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     ended_at = models.DateTimeField(null=True, db_index=True)
 
+    def save(self, *args, **kwargs):
+        # set bought_at to ticker's current price only on initial creation
+        if not self.pk:
+            self.bought_at = self.ticker.price
+        super().save(*args, **kwargs)
+
     def sell(self):
-        self.sold_at = Ticker.objects.get(exchange=self.exchange, symbol=self.symbol).price
+        self.sold_at = self.ticker.price
         self.ended_at = timezone.now()
         self.save()
