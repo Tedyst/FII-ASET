@@ -58,7 +58,8 @@ In order to install the app, you need to use Python 3.12 or higher. You can inst
 After you have installed Python, you can install the required packages by running the following command in the root directory of the project:
 
 ```bash
-poetry install
+poetry install --group dev
+pre-commit install
 ```
 
 After you have installed the required packages, you need to start the virtual environment by running the following command in the root directory of the project:

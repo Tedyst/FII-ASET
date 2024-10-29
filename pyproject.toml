@@ -15,6 +15,7 @@ django-extensions = "^3.2.3"
 
 [tool.poetry.group.dev.dependencies]
 pydotplus = "^2.0.2"
+pre-commit = "^4.0.1"
 
 [build-system]
 requires = ["poetry-core"]
