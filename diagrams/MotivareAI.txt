@@ -1,6 +1,6 @@
-Am folosit AI pentru a primi exemple de diagrame de clase si use-case. Am folosit ChatGPT si am cerut exemple de relatii si actori pe care le-ar putea avea diagramele noastre in fuctie de tema data. 
-Exemplu: 
-Give me an example for this class diagram 
+Am folosit AI pentru a primi exemple de diagrame de clase si use-case. Am folosit ChatGPT si am cerut exemple de relatii si actori pe care le-ar putea avea diagramele noastre in fuctie de tema data.
+Exemplu:
+Give me an example for this class diagram
 
 - [ ] Trading Account Management Class Diagram
 

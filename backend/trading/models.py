@@ -27,7 +27,7 @@ class Position(models.Model):
     ticker = models.ForeignKey(Ticker, on_delete=models.CASCADE, db_index=True)
 
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    bought_at = models.DecimalField(max_digits=10, decimal_places=2)
+    bought_at = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     sold_at = models.DecimalField(max_digits=10, decimal_places=2, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -35,6 +35,6 @@ class Position(models.Model):
     ended_at = models.DateTimeField(null=True, db_index=True)
 
     def sell(self):
-        self.sold_at = Ticker.objects.get(exchange=self.exchange, symbol=self.symbol).price
+        self.sold_at = self.ticker.price
         self.ended_at = timezone.now()
         self.save()

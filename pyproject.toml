@@ -4,6 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Stoica Tedy <stoicatedy@gmail.com>"]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -14,6 +15,7 @@ django-extensions = "^3.2.3"
 
 [tool.poetry.group.dev.dependencies]
 pydotplus = "^2.0.2"
+pre-commit = "^4.0.1"
 
 [build-system]
 requires = ["poetry-core"]

@@ -1,0 +1,2 @@
+- Reparat un test care dadea fail
+- Scris un semnal Django pentru a repara un test
