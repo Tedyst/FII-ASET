@@ -32,7 +32,7 @@ Project proposals for DevOps side:
 - Employee Management and Payroll System
 - Financial Trading Platform
 
-## Team 
+## Team
 
 | Nume                                                       | E-Mail                       |              |
 |------------------------------------------------------------|------------------------------|-------------|
