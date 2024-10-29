@@ -27,18 +27,12 @@ class Position(models.Model):
     ticker = models.ForeignKey(Ticker, on_delete=models.CASCADE, db_index=True)
 
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    bought_at = models.DecimalField(max_digits=10, decimal_places=2)
+    bought_at = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     sold_at = models.DecimalField(max_digits=10, decimal_places=2, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     ended_at = models.DateTimeField(null=True, db_index=True)
-
-    def save(self, *args, **kwargs):
-        # set bought_at to ticker's current price only on initial creation
-        if not self.pk:
-            self.bought_at = self.ticker.price
-        super().save(*args, **kwargs)
 
     def sell(self):
         self.sold_at = self.ticker.price
