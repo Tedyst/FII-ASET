@@ -1,0 +1,4 @@
+- Digramele BPMN
+- Ajutat colegi la instalarea de kubeconfigs
+- Scris 2 teste pentru modelul de Position
+- Instalat Lens si accesat clusterul de Kubernetes
