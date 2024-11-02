@@ -1,2 +1,6 @@
-am terminat de facut setup-ul de k3s folosind ansible
-am facut sa se poata creea conturi folosind ansible si sa se genereze in mod automat kubeconfigs
+Am imeplementat folosind Ansible instalarea de k3s si creearea de utilizatori si kubeconfigs
+Am creeat task-uri pentru restul echipei
+
+Am creat impreuna cu Vlad diagramele BPMN si verificat codul colegilor si ajutat echipa in a da debug la un ValueError
+Ajutat echipa la setup-ul proiectului folosind Poetry
+

@@ -1,5 +1,7 @@
-from testing import *
-import os 
+import os
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# noqa: F403,F401
+from testing import *
+
+SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = False

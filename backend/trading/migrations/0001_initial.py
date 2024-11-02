@@ -8,51 +8,101 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Exchange',
+            name="Exchange",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('url', models.URLField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("url", models.URLField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Ticker',
+            name="Ticker",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('symbol', models.CharField(max_length=255)),
-                ('price', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('exchange', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='trading.exchange')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("symbol", models.CharField(max_length=255)),
+                ("price", models.DecimalField(decimal_places=2, max_digits=10)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "exchange",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="trading.exchange",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Position',
+            name="Position",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('amount', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('bought_at', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('sold_at', models.DecimalField(decimal_places=2, max_digits=10, null=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('ended_at', models.DateTimeField(db_index=True, null=True)),
-                ('ticker', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='trading.ticker')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("amount", models.DecimalField(decimal_places=2, max_digits=10)),
+                ("bought_at", models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "sold_at",
+                    models.DecimalField(decimal_places=2, max_digits=10, null=True),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("ended_at", models.DateTimeField(db_index=True, null=True)),
+                (
+                    "ticker",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="trading.ticker"
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='TickerHistory',
+            name="TickerHistory",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('price', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('time', models.DateTimeField(auto_now_add=True)),
-                ('ticker', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='trading.ticker')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("price", models.DecimalField(decimal_places=2, max_digits=10)),
+                ("time", models.DateTimeField(auto_now_add=True)),
+                (
+                    "ticker",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="trading.ticker"
+                    ),
+                ),
             ],
         ),
     ]

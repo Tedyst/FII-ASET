@@ -32,7 +32,7 @@ Project proposals for DevOps side:
 - Employee Management and Payroll System
 - Financial Trading Platform
 
-## Team 
+## Team
 
 | Nume                                                       | E-Mail                       |              |
 |------------------------------------------------------------|------------------------------|-------------|
@@ -58,7 +58,14 @@ In order to install the app, you need to use Python 3.12 or higher. You can inst
 After you have installed Python, you can install the required packages by running the following command in the root directory of the project:
 
 ```bash
-poetry install
+poetry install --group dev
+pre-commit install
+```
+
+After you have installed the required packages, you need to start the virtual environment by running the following command in the root directory of the project:
+
+```bash
+poetry shell
 ```
 
 ## Running the app
@@ -66,7 +73,16 @@ poetry install
 In order to run the app, you need to run the following command in the `backend` directory of the project:
 
 ```bash
+python manage.py migrate
 python manage.py runserver
+```
+
+## Making migrations
+
+In order to make migrations (when you change any Model), you need to run the following command in the `backend` directory of the project:
+
+```bash
+python manage.py makemigrations
 ```
 
 Be warned that Celery tasks will run in eager mode, meaning that they will run synchronously. If you want to run them asynchronously, you need to install and run a message broker like RabbitMQ or Redis. You can find more information about this [here](https://docs.celeryproject.org/en/stable/getting-started/brokers/).

@@ -1,0 +1,2 @@
+- Ajutat la research legat de BPMN si la scrierea testelor
+- Creat un semnal Django pentru a rezolva un test
