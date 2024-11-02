@@ -8,7 +8,7 @@ RUN apt-get update \
     curl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && curl -sSL https://install.python-poetry.org | python3 - && poetry --version
+    && curl --proto "=https" -sSL https://install.python-poetry.org | python3 - && poetry --version
 
 FROM base AS builder
 
@@ -22,7 +22,7 @@ FROM base AS runner
 WORKDIR /app
 COPY --from=builder /app/.venv/ /app/.venv/
 
-COPY . /app
+COPY backend /app
 
 EXPOSE 8000
 
