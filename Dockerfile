@@ -46,9 +46,11 @@ FROM nginxinc/nginx-unprivileged:1.27.2-alpine AS nginx
 
 USER nginx
 
-COPY --from=production --chown=nginx --chmod=555 /app/backend/staticfiles /var/www/static/
+COPY --from=production --chown=nginx /app/backend/staticfiles /var/www/static/
+COPY --chown=nginx nginx.conf /etc/nginx/nginx.conf
 
-COPY --chown=nginx --chmod=555 nginx.conf /etc/nginx/nginx.conf
+RUN chmod -R 555 /var/www/static/ && \
+    chmod 444 /etc/nginx/nginx.conf
 
 EXPOSE 80
 
