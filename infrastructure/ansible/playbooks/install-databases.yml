@@ -1,0 +1,23 @@
+- hosts: localhost
+  tasks:
+    - name: Create a namespace databases
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: databases
+    - name: Add postgres-operator-charts repo
+      kubernetes.core.helm_repository:
+        name: postgres-operator-charts
+        repo_url: "https://opensource.zalando.com/postgres-operator/charts/postgres-operator"
+    - name: Deploy latest version of postgres-operator inside the databases namespace
+      kubernetes.core.helm:
+        name: postgres-operator
+        chart_ref: postgres-operator-charts/postgres-operator
+        release_namespace: databases
+    - name: Apply the postgresql-cluster manifest
+      kubernetes.core.k8s:
+        definition: "{{ lookup('file', '../../kubernetes/postgres.yml') }}"
+        state: present
+        namespace: databases
