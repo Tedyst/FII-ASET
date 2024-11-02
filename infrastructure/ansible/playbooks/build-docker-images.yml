@@ -1,0 +1,20 @@
+- hosts: localhost
+  tasks:
+    - name: Build Django Docker image
+      community.docker.docker_image:
+        source: build
+        name: "ghcr.io/tedyst/fii-aset:{{ tag }}"
+        build:
+          target: production
+          path: "{{ playbook_dir }}/../../../"
+          rm: false
+        push: true
+    - name: Build Nginx Static Docker image
+      community.docker.docker_image:
+        source: build
+        name: "ghcr.io/tedyst/fii-aset:{{ tag }}-nginx"
+        build:
+          target: nginx
+          path: "{{ playbook_dir }}/../../../"
+          rm: false
+        push: true

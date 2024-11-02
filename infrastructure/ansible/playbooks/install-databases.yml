@@ -16,6 +16,9 @@
         name: postgres-operator
         chart_ref: postgres-operator-charts/postgres-operator
         release_namespace: databases
+        values:
+          configKubernetes:
+            enable_cross_namespace_secret: true
     - name: Apply the postgresql-cluster manifest
       kubernetes.core.k8s:
         definition: "{{ lookup('file', '../../kubernetes/postgres.yml') }}"

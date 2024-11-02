@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-deploy
+  labels:
+    app: django
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: django
+  template:
+    metadata:
+      labels:
+        app: django
+    spec:
+      containers:
+        - name: prometheus-exporter
+          image: ghcr.io/tedyst/fii-aset:{{ tag }}
+          command:
+            - python
+            - /app/backend/collector.py
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7999
+              name: prometheus
+          env:
+            - name: PROMETHEUS_MULTIPROC_DIR
+              value: /tmp/prometheus
+          volumeMounts:
+            - name: shared-data
+              mountPath: /tmp/prometheus
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "1"
+        - image: ghcr.io/tedyst/fii-aset:{{ tag }}
+          name: django
+          envFrom:
+            - secretRef:
+                name: django-secret
+            - configMapRef:
+                name: django-config
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: default.django.postgresql-cluster.credentials.postgresql.acid.zalan.do
+                  key: password
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: default.django.postgresql-cluster.credentials.postgresql.acid.zalan.do
+                  key: username
+                  namespace: databases
+            - name: DB_HOST
+              value: postgresql-cluster.databases.svc.cluster.local
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: django
+            - name: PROMETHEUS_MULTIPROC_DIR
+              value: /tmp/prometheus
+            - name: ENVIRONMENT
+              value: production
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+              name: gunicorn
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+              httpHeaders:
+                - name: Host
+                  value: "{{ django_hostname }}"
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+              httpHeaders:
+                - name: Host
+                  value: "{{ django_hostname }}"
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "1"
+          volumeMounts:
+            - name: shared-data
+              mountPath: /tmp/prometheus
+      volumes:
+        - name: shared-data
+          emptyDir: {}

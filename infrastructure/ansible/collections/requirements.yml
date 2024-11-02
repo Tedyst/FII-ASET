@@ -4,3 +4,4 @@ collections:
     version: master
     type: git
   - name: kubernetes.core
+  - name: community.docker
