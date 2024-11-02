@@ -3,3 +3,4 @@ collections:
     source: git+https://github.com/k3s-io/k3s-ansible.git
     version: master
     type: git
+  - name: kubernetes.core
