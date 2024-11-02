@@ -8,6 +8,7 @@ spec:
   failedJobsHistoryLimit: 1
   template:
     spec:
+      automountServiceAccountToken: false
       containers:
         - image: ghcr.io/tedyst/fii-aset:{{ tag }}
           name: django

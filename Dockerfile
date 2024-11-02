@@ -42,11 +42,13 @@ ENV DJANGO_SETTINGS_MODULE=backend.settings.prod
 WORKDIR /app/backend
 ENTRYPOINT [ "/app/backend/entrypoint.sh" ]
 
-FROM nginx:1.27.2 AS nginx
+FROM nginxinc/nginx-unprivileged:1.27.2-alpine AS nginx
 
-COPY --from=production --chown=nginx /app/backend/staticfiles /var/www/static/
+USER nginx
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=production --chown=nginx --chmod=555 /app/backend/staticfiles /var/www/static/
+
+COPY --chown=nginx --chmod=555 nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 

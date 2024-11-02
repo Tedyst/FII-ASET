@@ -19,6 +19,7 @@ spec:
       labels:
         app: django
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: prometheus-exporter
           image: ghcr.io/tedyst/fii-aset:{{ tag }}
