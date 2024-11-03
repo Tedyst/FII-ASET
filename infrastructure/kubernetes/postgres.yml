@@ -11,8 +11,8 @@ spec:
     admin:
       - superuser
       - createdb
-    django: []
+    default.django: []
   databases:
-    django: django
+    django: default.django
   postgresql:
     version: "16"

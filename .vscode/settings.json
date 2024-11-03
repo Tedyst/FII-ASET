@@ -2,5 +2,8 @@
     "sonarlint.connectedMode.project": {
         "connectionId": "tedyst",
         "projectKey": "Tedyst_FII-ASET"
+    },
+    "yaml.schemas": {
+        "https://json.schemastore.org/github-workflow.json": "file:///home/tedy/Git/FII-ASET/.github/workflows/deploy.yml"
     }
 }

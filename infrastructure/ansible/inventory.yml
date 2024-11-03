@@ -4,6 +4,7 @@ k3s_cluster:
       hosts:
         home.tedyst.ro:23:
       agent:
+all:
   vars:
     user_kubectl: false
     k3s_version: v1.31.1+k3s1
@@ -30,5 +31,7 @@ k3s_cluster:
       30306338386131613165663361613761353638636335383465376663393633373761626634633066
       37613165616565646366386166623531386666373235623462663231336364643966633862316139
       6533
+    django_hostname: aset.tedyst.ro
 localhost:
-  ansible_connection: local
+  vars:
+    ansible_connection: local

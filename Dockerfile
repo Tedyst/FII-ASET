@@ -1,28 +1,15 @@
-FROM python:3.12-slim AS base
-
-ENV POETRY_HOME=/opt/poetry
-ENV PATH=${POETRY_HOME}/bin:${PATH}
-
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y \
-    curl \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && curl --proto "=https" -sSL https://install.python-poetry.org | python3 - && poetry --version
-
-FROM base AS builder
+FROM python:3.12-slim AS runner
 
 WORKDIR /app
-COPY poetry.lock pyproject.toml ./
-RUN poetry config virtualenvs.in-project true && \
-    poetry install --only main --no-interaction
+COPY requirements.txt ./
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends g++ libpq-dev librabbitmq4 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    pip install -r requirements.txt --no-cache-dir && \
+    apt-get purge -y --auto-remove g++
 
-FROM base AS runner
-
-WORKDIR /app
-COPY --from=builder /app/.venv/ /app/.venv/
-
-COPY backend /app
+COPY backend gunicorn.conf.py /app/backend/
 
 EXPOSE 8000
 
@@ -49,5 +36,26 @@ RUN groupadd -g ${gid} ${group} && \
 
 USER ${uid}:${gid}
 
+ENV DJANGO_SETTINGS_MODULE=backend.settings.prod
+
 WORKDIR /app/backend
 ENTRYPOINT [ "/app/backend/entrypoint.sh" ]
+
+
+FROM development AS static
+
+RUN [ "python", "/app/backend/manage.py", "collectstatic", "--noinput" ]
+
+FROM nginxinc/nginx-unprivileged:1.27.2-alpine AS nginx
+
+USER nginx
+
+COPY --from=static --chown=nginx /app/backend/staticfiles /var/www/static/
+COPY --chown=nginx nginx.conf /etc/nginx/nginx.conf
+
+RUN chmod -R 555 /var/www/static/ && \
+    chmod 444 /etc/nginx/nginx.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-static-ingress
+  labels:
+    name: nginx-static
+spec:
+  rules:
+    - host: "{{ django_hostname }}"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/static"
+            backend:
+              service:
+                name: nginx-static-service
+                port:
+                  number: 80
