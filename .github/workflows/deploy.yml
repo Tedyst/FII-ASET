@@ -23,11 +23,11 @@ jobs:
           version: "9.3.0"
       - uses: tecolicom/actions-use-apt-tools@v1
         with:
-          tools: jmespath jq
+          tools: jq
       - name: Install dependencies
         working-directory: infrastructure/ansible
         run: |
-          pip install kubernetes
+          pip install kubernetes jmespath
           ansible-galaxy collection install "git+https://github.com/k3s-io/k3s-ansible.git,master"
           ansible-galaxy collection install kubernetes.core
       - name: Run playbook
