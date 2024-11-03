@@ -20,7 +20,14 @@ psycopg2 = "^2.9.10"
 [tool.poetry.group.dev.dependencies]
 pydotplus = "^2.0.2"
 pre-commit = "^4.0.1"
+coverage = "^7.6.4"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.run]
+branch = true
+source = ["backend"]
+command_line = "backend/manage.py test"
+relative_files = true
