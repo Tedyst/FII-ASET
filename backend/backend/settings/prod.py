@@ -1,6 +1,4 @@
 import os
-import urllib
-import urllib.parse
 
 # noqa: F403,F401
 from .testing import *
@@ -42,5 +40,3 @@ RABBITMQ_VHOST = os.environ["RABBITMQ_VHOST"]
 CELERY_BROKER_URL = (
     f"amqp://{RABBITMQ_USER}:{RABBITMQ_PASSWORD}@{RABBITMQ_URL}/{RABBITMQ_VHOST}"
 )
-
-print(CELERY_BROKER_URL)
