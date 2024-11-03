@@ -41,6 +41,15 @@ INSTALLED_APPS = [
     "django_extensions",
     "profiles",
     "trading",
+    # allauth apps:
+    "allauth_ui",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
+    "allauth.mfa",
+    "widget_tweaks",
+    "slippers",
 ]
 
 MIDDLEWARE = [
@@ -50,6 +59,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -132,3 +142,28 @@ CELERY_ALWAYS_EAGER = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
+
+# Allauth Configuration
+# When going to production ( allauth ) you should run python manage.py collectstatic
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",  # Needed for admin login
+    "allauth.account.auth_backends.AuthenticationBackend",  # Needed for allauth login
+]
+
+ALLAUTH_UI_THEME = "light"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = '@gmail.com'
+# EMAIL_HOST_PASSWORD = 'password'
+# Enable Multi-Factor Authentication
+ACCOUNT_MFA_ENABLED = True  # Enable MFA
+ACCOUNT_MFA_REQUIRED = True  # Require MFA for all users
+ACCOUNT_MFA_MAINTENANCE_MODE = False  # Maintenance mode for MFA (optional)
+ACCOUNT_MFA_TOTP_ENABLED = True  # Enable TOTP for MFA
+ACCOUNT_MFA_TOTP_VALIDITY_PERIOD = 30
