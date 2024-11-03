@@ -9,13 +9,31 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: azure/setup-kubectl@v4
+        id: install
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+      - name: "Install Ansible"
+        uses: alex-oleshkevich/setup-ansible@v1.0.1
+        with:
+          version: "9.3.0"
+      - name: Install dependencies
+        working-directory: infrastructure/ansible
+        run: |
+          pip install kubernetes
+          ansible-galaxy collection install "git+https://github.com/k3s-io/k3s-ansible.git,master"
+          ansible-galaxy collection install kubernetes.core
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
           playbook: playbooks/main.yml
-          directory: infrastructure/ansible
+          directory: ./infrastructure/ansible
           key: ${{secrets.SSH_PRIVATE_KEY}}
           vault_password: ${{secrets.VAULT_PASSWORD}}
-          requirements: collections/requirements.yml
-          options: |-
+          options: |
             --inventory inventory.yml
+            --verbose
