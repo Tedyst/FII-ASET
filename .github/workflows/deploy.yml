@@ -32,6 +32,7 @@ jobs:
           pip install kubernetes jmespath
           ansible-galaxy collection install "git+https://github.com/k3s-io/k3s-ansible.git,master"
           ansible-galaxy collection install kubernetes.core
+          ansible-galaxy collection install community.docker --force
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
