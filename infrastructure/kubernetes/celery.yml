@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: django-deploy
+  name: celery-deploy
   labels:
-    app: django
+    app: celery
 spec:
   replicas: 2
   strategy:
@@ -13,38 +13,16 @@ spec:
       maxUnavailable: 1
   selector:
     matchLabels:
-      app: django
+      app: celery
   template:
     metadata:
       labels:
-        app: django
+        app: celery
     spec:
       automountServiceAccountToken: false
       containers:
-        - name: prometheus-exporter
-          image: ghcr.io/tedyst/fii-aset:{{ tag }}
-          command:
-            - python
-            - /app/backend/collector.py
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 7999
-              name: prometheus
-          env:
-            - name: PROMETHEUS_MULTIPROC_DIR
-              value: /tmp/prometheus
-          volumeMounts:
-            - name: shared-data
-              mountPath: /tmp/prometheus
-          resources:
-            requests:
-              memory: "64Mi"
-              cpu: "250m"
-            limits:
-              memory: "256Mi"
-              cpu: "1"
         - image: ghcr.io/tedyst/fii-aset:{{ tag }}
-          name: django
+          name: celery
           envFrom:
             - secretRef:
                 name: django-secret
@@ -68,10 +46,6 @@ spec:
               value: "5432"
             - name: DB_NAME
               value: django
-            - name: PROMETHEUS_MULTIPROC_DIR
-              value: /tmp/prometheus
-            - name: ENVIRONMENT
-              value: production
             - name: RABBITMQ_URL
               value: rabbitmq-cluster.databases.svc.cluster.local
             - name: RABBITMQ_PORT
@@ -91,37 +65,12 @@ spec:
             - name: RABBITMQ_VHOST
               value: django
           imagePullPolicy: Always
-          ports:
-            - containerPort: 8000
-              name: gunicorn
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 8000
-              httpHeaders:
-                - name: Host
-                  value: "{{ django_hostname }}"
-            initialDelaySeconds: 10
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /healthz
-              port: 8000
-              httpHeaders:
-                - name: Host
-                  value: "{{ django_hostname }}"
-            initialDelaySeconds: 10
-            periodSeconds: 10
+          command:
+            - /app/backend/celery.sh
           resources:
             requests:
               memory: "64Mi"
               cpu: "250m"
             limits:
               memory: "256Mi"
-              cpu: "1"
-          volumeMounts:
-            - name: shared-data
-              mountPath: /tmp/prometheus
-      volumes:
-        - name: shared-data
-          emptyDir: {}
+              cpu: "250m"

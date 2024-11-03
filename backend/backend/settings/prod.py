@@ -1,4 +1,6 @@
 import os
+import urllib
+import urllib.parse
 
 # noqa: F403,F401
 from .testing import *
@@ -18,7 +20,7 @@ ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
 CSRF_TRUSTED_ORIGINS = ["https://" + host for host in ALLOWED_HOSTS]
 
-CELERY_ALWAYS_EAGER = True
+CELERY_ALWAYS_EAGER = False
 
 DATABASES = {
     "default": {
@@ -30,3 +32,15 @@ DATABASES = {
         "PASSWORD": os.environ["DB_PASSWORD"],
     }
 }
+
+RABBITMQ_URL = os.environ["RABBITMQ_URL"]
+RABBITMQ_USER = os.environ["RABBITMQ_USER"]
+RABBITMQ_PASSWORD = os.environ["RABBITMQ_PASSWORD"]
+RABBITMQ_VHOST = os.environ["RABBITMQ_VHOST"]
+
+
+CELERY_BROKER_URL = (
+    f"amqp://{RABBITMQ_USER}:{RABBITMQ_PASSWORD}@{RABBITMQ_URL}/{RABBITMQ_VHOST}"
+)
+
+print(CELERY_BROKER_URL)

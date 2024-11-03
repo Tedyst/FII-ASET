@@ -3,7 +3,7 @@ FROM python:3.12-slim AS runner
 WORKDIR /app
 COPY requirements.txt ./
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libpq-dev g++ && \
+    apt-get install -y --no-install-recommends g++ libpq-dev librabbitmq4 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     pip install -r requirements.txt --no-cache-dir && \
@@ -36,17 +36,21 @@ RUN groupadd -g ${gid} ${group} && \
 
 USER ${uid}:${gid}
 
-RUN [ "python", "/app/backend/manage.py", "collectstatic", "--noinput" ]
 ENV DJANGO_SETTINGS_MODULE=backend.settings.prod
 
 WORKDIR /app/backend
 ENTRYPOINT [ "/app/backend/entrypoint.sh" ]
 
+
+FROM development AS static
+
+RUN [ "python", "/app/backend/manage.py", "collectstatic", "--noinput" ]
+
 FROM nginxinc/nginx-unprivileged:1.27.2-alpine AS nginx
 
 USER nginx
 
-COPY --from=production --chown=nginx /app/backend/staticfiles /var/www/static/
+COPY --from=static --chown=nginx /app/backend/staticfiles /var/www/static/
 COPY --chown=nginx nginx.conf /etc/nginx/nginx.conf
 
 RUN chmod -R 555 /var/www/static/ && \

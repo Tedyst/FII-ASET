@@ -44,4 +44,22 @@ spec:
               value: /tmp/prometheus
             - name: ENVIRONMENT
               value: production
+            - name: RABBITMQ_URL
+              value: rabbitmq-cluster.databases.svc.cluster.local
+            - name: RABBITMQ_PORT
+              value: "5672"
+            - name: RABBITMQ_USER
+              valueFrom:
+                secretKeyRef:
+                  name: django-rabbitmq-user-user-credentials
+                  key: username
+                  namespace: default
+            - name: RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: django-rabbitmq-user-user-credentials
+                  key: password
+                  namespace: default
+            - name: RABBITMQ_VHOST
+              value: django
       restartPolicy: Never
