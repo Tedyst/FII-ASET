@@ -23,7 +23,7 @@ jobs:
           version: "9.3.0"
       - uses: tecolicom/actions-use-apt-tools@v1
         with:
-          packages: jmespath jq
+          tools: jmespath jq
       - name: Install dependencies
         working-directory: infrastructure/ansible
         run: |
