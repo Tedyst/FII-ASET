@@ -21,6 +21,10 @@ jobs:
         uses: alex-oleshkevich/setup-ansible@v1.0.1
         with:
           version: "9.3.0"
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: jmespath jq
+          version: 1.0
       - name: Install dependencies
         working-directory: infrastructure/ansible
         run: |
@@ -36,4 +40,3 @@ jobs:
           vault_password: ${{secrets.VAULT_PASSWORD}}
           options: |
             --inventory inventory.yml
-            --verbose
