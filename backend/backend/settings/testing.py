@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    "django_browser_reload",
+    "tailwind",
+    "frontend",
     "profiles",
     "trading",
 ]
@@ -51,6 +54,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -132,3 +136,9 @@ CELERY_ALWAYS_EAGER = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
+
+TAILWIND_APP_NAME = "frontend"
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

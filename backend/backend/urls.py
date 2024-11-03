@@ -17,9 +17,13 @@ Including another URLconf
 
 from django.contrib import admin
 from django.http import HttpResponse
-from django.urls import path
+from django.urls import include, path
+from profiles.urls import urlpatterns as profiles_urls
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("healthz/", lambda request: HttpResponse("OK")),
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
+
+urlpatterns += profiles_urls

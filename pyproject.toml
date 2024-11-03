@@ -15,6 +15,7 @@ prometheus-client = "^0.21.0"
 django-prometheus = "^2.3.1"
 gunicorn = "^23.0.0"
 psycopg2 = "^2.9.10"
+django-tailwind = {extras = ["reload"], version = "^3.8.0"}
 
 
 [tool.poetry.group.dev.dependencies]
