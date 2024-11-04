@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    "compress_staticfiles",
     "profiles",
     "trading",
 ]
@@ -132,3 +133,12 @@ CELERY_ALWAYS_EAGER = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "compress_staticfiles.storage.CompressStaticFilesStorage",
+    },
+}

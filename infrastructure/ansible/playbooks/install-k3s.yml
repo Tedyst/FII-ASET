@@ -3,4 +3,3 @@
   become: true
   roles:
     - role: k3s.orchestration.k3s_server
-
