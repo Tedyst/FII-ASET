@@ -630,6 +630,44 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-allauth"
+version = "65.1.0"
+description = "Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django_allauth-65.1.0.tar.gz", hash = "sha256:ab2c32c51797bab1e7a334f37afa61ef4a88c6f13dfd7bd898a16e2b7e567ef0"},
+]
+
+[package.dependencies]
+asgiref = ">=3.8.1"
+Django = ">=4.2"
+fido2 = {version = ">=1.1.2", optional = true, markers = "extra == \"mfa\""}
+qrcode = {version = ">=7.0.0", optional = true, markers = "extra == \"mfa\""}
+
+[package.extras]
+mfa = ["fido2 (>=1.1.2)", "qrcode (>=7.0.0)"]
+openid = ["python3-openid (>=3.0.8)"]
+saml = ["python3-saml (>=1.15.0,<2.0.0)"]
+socialaccount = ["pyjwt[crypto] (>=1.7)", "requests (>=2.0.0)", "requests-oauthlib (>=0.3.0)"]
+steam = ["python3-openid (>=3.0.8)"]
+
+[[package]]
+name = "django-allauth-ui"
+version = "1.5.1"
+description = ""
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django_allauth_ui-1.5.1-py3-none-any.whl", hash = "sha256:4b69d7209dac83946823ed14071adc3e8ccc3cb94b543c0ea0f575d747cee9b8"},
+    {file = "django_allauth_ui-1.5.1.tar.gz", hash = "sha256:31485740884dc6e2ed5a380fc7a4c056ed22035eeee650d9e33433322537af20"},
+]
+
+[package.dependencies]
+django-widget-tweaks = ">=1.5.0,<2.0.0"
+slippers = ">=0.6.2,<0.7.0"
+
+[[package]]
 name = "django-extensions"
 version = "3.2.3"
 description = "Extensions for Django"
@@ -656,6 +694,17 @@ files = [
 
 [package.dependencies]
 prometheus-client = ">=0.7"
+
+[[package]]
+name = "django-widget-tweaks"
+version = "1.5.0"
+description = "Tweak the form field rendering in templates, not in python-level form definitions."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django-widget-tweaks-1.5.0.tar.gz", hash = "sha256:1c2180681ebb994e922c754804c7ffebbe1245014777ac47897a81f57cc629c7"},
+    {file = "django_widget_tweaks-1.5.0-py3-none-any.whl", hash = "sha256:a41b7b2f05bd44d673d11ebd6c09a96f1d013ee98121cb98c384fe84e33b881e"},
+]
 
 [[package]]
 name = "dulwich"
@@ -757,6 +806,23 @@ files = [
 
 [package.extras]
 devel = ["colorama", "json-spec", "jsonschema", "pylint", "pytest", "pytest-benchmark", "pytest-cache", "validictory"]
+
+[[package]]
+name = "fido2"
+version = "1.1.3"
+description = "FIDO2/WebAuthn library for implementing clients and servers."
+optional = false
+python-versions = ">=3.8,<4.0"
+files = [
+    {file = "fido2-1.1.3-py3-none-any.whl", hash = "sha256:6be34c0b9fe85e4911fd2d103cce7ae8ce2f064384a7a2a3bd970b3ef7702931"},
+    {file = "fido2-1.1.3.tar.gz", hash = "sha256:26100f226d12ced621ca6198528ce17edf67b78df4287aee1285fee3cd5aa9fc"},
+]
+
+[package.dependencies]
+cryptography = ">=2.6,<35 || >35,<45"
+
+[package.extras]
+pcsc = ["pyscard (>=1.9,<3)"]
 
 [[package]]
 name = "filelock"
@@ -1746,6 +1812,25 @@ files = [
 ]
 
 [[package]]
+name = "qrcode"
+version = "8.0"
+description = "QR Code image generator"
+optional = false
+python-versions = "<4.0,>=3.9"
+files = [
+    {file = "qrcode-8.0-py3-none-any.whl", hash = "sha256:9fc05f03305ad27a709eb742cf3097fa19e6f6f93bb9e2f039c0979190f6f1b1"},
+    {file = "qrcode-8.0.tar.gz", hash = "sha256:025ce2b150f7fe4296d116ee9bad455a6643ab4f6e7dce541613a4758cbce347"},
+]
+
+[package.dependencies]
+colorama = {version = "*", markers = "sys_platform == \"win32\""}
+
+[package.extras]
+all = ["pillow (>=9.1.0)", "pypng"]
+pil = ["pillow (>=9.1.0)"]
+png = ["pypng"]
+
+[[package]]
 name = "rapidfuzz"
 version = "3.10.1"
 description = "rapid fuzzy string matching"
@@ -1918,6 +2003,23 @@ files = [
 ]
 
 [[package]]
+name = "slippers"
+version = "0.6.2"
+description = "Build reusable components in Django without writing a single line of Python."
+optional = false
+python-versions = ">=3.8.0"
+files = [
+    {file = "slippers-0.6.2-py3-none-any.whl", hash = "sha256:739e05f85354becbf0a65daab831eea62557d89e7512042209ab629af4378bca"},
+    {file = "slippers-0.6.2.tar.gz", hash = "sha256:4cb555b8822ba0d404e5405723f5d723994022c29046008ee917081031bc0cf1"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+PyYAML = ">=5.4.0"
+typeguard = ">=2.13.3,<3.0.0"
+typing-extensions = ">=4.4.0"
+
+[[package]]
 name = "soupsieve"
 version = "2.6"
 description = "A modern CSS selector implementation for Beautiful Soup."
@@ -1963,6 +2065,32 @@ python-versions = "*"
 files = [
     {file = "trove_classifiers-2024.10.21.16-py3-none-any.whl", hash = "sha256:0fb11f1e995a757807a8ef1c03829fbd4998d817319abcef1f33165750f103be"},
     {file = "trove_classifiers-2024.10.21.16.tar.gz", hash = "sha256:17cbd055d67d5e9d9de63293a8732943fabc21574e4c7b74edf112b4928cf5f3"},
+]
+
+[[package]]
+name = "typeguard"
+version = "2.13.3"
+description = "Run-time type checker for Python"
+optional = false
+python-versions = ">=3.5.3"
+files = [
+    {file = "typeguard-2.13.3-py3-none-any.whl", hash = "sha256:5e3e3be01e887e7eafae5af63d1f36c849aaa94e3a0112097312aabfa16284f1"},
+    {file = "typeguard-2.13.3.tar.gz", hash = "sha256:00edaa8da3a133674796cf5ea87d9f4b4c367d77476e185e80251cc13dfbb8c4"},
+]
+
+[package.extras]
+doc = ["sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme"]
+test = ["mypy", "pytest", "typing-extensions"]
+
+[[package]]
+name = "typing-extensions"
+version = "4.12.2"
+description = "Backported and Experimental Type Hints for Python 3.8+"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d"},
+    {file = "typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"},
 ]
 
 [[package]]
@@ -2150,4 +2278,4 @@ repair = ["scipy (>=1.6.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "c91b0eab498895d43a4a546f5edbd04c2743220a4503b3832d29b584e93dc0d6"
+content-hash = "966e46dd9f75737bd3b8b46276671ceee03a1ec67b31ab5162bcbd1e9212e39d"
