@@ -20,7 +20,7 @@ FROM runner AS development
 WORKDIR /app/backend
 ENTRYPOINT [ "/app/backend/entrypoint.sh" ]
 
-FROM runner AS production
+FROM runner AS production-base
 
 LABEL org.opencontainers.image.source=https://github.com/Tedyst/FII-ASET
 LABEL org.opencontainers.image.description="FII-ASET Project"
@@ -42,15 +42,31 @@ WORKDIR /app/backend
 ENTRYPOINT [ "/app/backend/entrypoint.sh" ]
 
 
-FROM development AS static
+FROM development AS collectstatic
 
-RUN [ "python", "/app/backend/manage.py", "collectstatic", "--noinput" ]
+COPY pyproject.toml poetry.lock /app/
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends nodejs npm && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    pip install poetry && \
+    poetry config virtualenvs.create false && \
+    poetry install --with dev --no-interaction --no-ansi && \
+    python /app/backend/manage.py tailwind install && \
+    python /app/backend/manage.py tailwind build && \
+    python /app/backend/manage.py collectstatic --noinput
+
+FROM production-base AS production
+
+COPY --from=collectstatic --chown=django /app/backend/staticfiles /app/backend/staticfiles
+COPY --from=collectstatic --chown=django /app/backend/frontend/static /app/backend/frontend/static
 
 FROM nginxinc/nginx-unprivileged:1.27.2-alpine AS nginx
 
 USER nginx
 
-COPY --from=static --chown=nginx /app/backend/staticfiles /var/www/static/
+COPY --from=collectstatic --chown=nginx /app/backend/staticfiles /var/www/static/
 COPY --chown=nginx nginx.conf /etc/nginx/nginx.conf
 
 RUN chmod -R 555 /var/www/static/ && \
