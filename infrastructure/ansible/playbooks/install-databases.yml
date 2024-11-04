@@ -38,3 +38,8 @@
         definition: "{{ lookup('file', '../../kubernetes/rabbitmq.yml') }}"
         state: present
         namespace: databases
+      retries: 10
+      delay: 5
+      until: rabbitmq_cluster.failed == false
+      register: rabbitmq_cluster
+      debugger: on_failed
