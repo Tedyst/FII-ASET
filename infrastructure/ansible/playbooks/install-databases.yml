@@ -1,0 +1,40 @@
+- hosts: localhost
+  tasks:
+    - name: Create a namespace databases
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: databases
+    - name: Add postgres-operator-charts repo
+      kubernetes.core.helm_repository:
+        name: postgres-operator-charts
+        repo_url: "https://opensource.zalando.com/postgres-operator/charts/postgres-operator"
+    - name: Deploy latest version of postgres-operator inside the databases namespace
+      kubernetes.core.helm:
+        name: postgres-operator
+        chart_ref: postgres-operator-charts/postgres-operator
+        release_namespace: databases
+        values:
+          configKubernetes:
+            enable_cross_namespace_secret: true
+    - name: Apply the postgresql-cluster manifest
+      kubernetes.core.k8s:
+        definition: "{{ lookup('file', '../../kubernetes/postgres.yml') }}"
+        state: present
+        namespace: databases
+    - name: Add bitnami repo
+      kubernetes.core.helm_repository:
+        name: bitnami
+        repo_url: "https://charts.bitnami.com/bitnami"
+    - name: Install RabbitMQ Operator
+      kubernetes.core.helm:
+        name: rabbitmq-operator
+        chart_ref: bitnami/rabbitmq-cluster-operator
+        release_namespace: databases
+    - name: Deploy the RabbitMQ Cluster
+      kubernetes.core.k8s:
+        definition: "{{ lookup('file', '../../kubernetes/rabbitmq.yml') }}"
+        state: present
+        namespace: databases

@@ -1,0 +1,13 @@
+- hosts: localhost
+  tasks:
+    - name: Get Git version
+      shell: git rev-parse HEAD
+      register: git_version
+    - name: Set tag to Git hash (first 6 characters)
+      set_fact:
+        tag: "{{ git_version.stdout | regex_replace('^([0-9a-f]{6}).*$', '\\1') }}"
+- import_playbook: install-k3s.yml
+- import_playbook: service-accounts.yml
+- import_playbook: install-databases.yml
+- import_playbook: build-docker-images.yml
+- import_playbook: install-app.yml
