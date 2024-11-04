@@ -11,16 +11,19 @@ python = "^3.12"
 Django = "^5.1.2"
 celery = "^5.4.0"
 django-extensions = "^3.2.3"
+yfinance = "^0.2.48"
 prometheus-client = "^0.21.0"
 django-prometheus = "^2.3.1"
 gunicorn = "^23.0.0"
 psycopg2 = "^2.9.10"
 django-tailwind = {extras = ["reload"], version = "^3.8.0"}
+django-compress-staticfiles = "^1.0.1b0"
 
 
 [tool.poetry.group.dev.dependencies]
 pydotplus = "^2.0.2"
 pre-commit = "^4.0.1"
+poetry-plugin-export = "^1.8.0"
 coverage = "^7.6.4"
 
 [build-system]

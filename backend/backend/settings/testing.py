@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django_browser_reload",
     "tailwind",
     "frontend",
+    "compress_staticfiles",
     "profiles",
     "trading",
 ]
@@ -136,6 +137,15 @@ CELERY_ALWAYS_EAGER = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "compress_staticfiles.storage.CompressStaticFilesStorage",
+    },
+}
 
 TAILWIND_APP_NAME = "frontend"
 
