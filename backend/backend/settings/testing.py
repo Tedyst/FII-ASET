@@ -32,24 +32,24 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "allauth_ui",
+    "allauth.account",
+    "allauth.mfa",
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount",
+    "allauth",
+    "django_extensions",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
-    "django.contrib.sessions",
+    "django.contrib.humanize",
     "django.contrib.messages",
+    "django.contrib.sessions",
     "django.contrib.staticfiles",
-    "django_extensions",
-    "profiles",
-    "trading",
-    # allauth apps:
-    "allauth_ui",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.github",
-    "allauth.mfa",
-    "widget_tweaks",
     "slippers",
+    "widget_tweaks",
+    "trading",
+    "profiles",
 ]
 
 MIDDLEWARE = [
@@ -155,15 +155,16 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = '@gmail.com'
-# EMAIL_HOST_PASSWORD = 'password'
-# Enable Multi-Factor Authentication
-ACCOUNT_MFA_ENABLED = True  # Enable MFA
-ACCOUNT_MFA_REQUIRED = True  # Require MFA for all users
-ACCOUNT_MFA_MAINTENANCE_MODE = False  # Maintenance mode for MFA (optional)
-ACCOUNT_MFA_TOTP_ENABLED = True  # Enable TOTP for MFA
+
+ACCOUNT_MFA_ENABLED = True
+ACCOUNT_MFA_REQUIRED = True
+ACCOUNT_MFA_MAINTENANCE_MODE = False
+ACCOUNT_MFA_TOTP_ENABLED = True
 ACCOUNT_MFA_TOTP_VALIDITY_PERIOD = 30
+ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
+
+MFA_PASSKEY_LOGIN_ENABLED = False
+MFA_WEBAUTHN_ALLOW_INSECURE_ORIGIN = False
+MFA_PASSKEY_SIGNUP_ENABLED = False
