@@ -10,7 +10,11 @@
               content="trading, stocks, finance, investment, browser-based">
         <title>ASET Trading App</title>
         {% tailwind_css %}
-        <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
+        <script>
+            function setTheme(theme) {
+                document.cookie = `theme=${theme};path=/;max-age=31536000`;
+            }
+        </script>
     </head>
     <body class="font-sans leading-normal tracking-normal">
         <nav class="shadow-lg">
@@ -35,8 +39,8 @@
                                        name="theme-dropdown"
                                        class="!bg-none theme-controller btn btn-sm btn-block btn-ghost justify-start"
                                        aria-label="Light"
-                                       data-set-theme="light"
-                                       data-act-class="ACTIVECLASS"
+                                       onchange="setTheme('light')"
+                                       {% if theme == 'light' %}checked{% endif %}
                                        value="light" />
                             </li>
                             <li>
@@ -44,8 +48,8 @@
                                        name="theme-dropdown"
                                        class="!bg-none theme-controller btn btn-sm btn-block btn-ghost justify-start"
                                        aria-label="Dark"
-                                       data-set-theme="dark"
-                                       data-act-class="ACTIVECLASS"
+                                       onchange="setTheme('dark')"
+                                       {% if theme == 'dark' %}checked{% endif %}
                                        value="dark" />
                             </li>
                             <li>
@@ -53,8 +57,8 @@
                                        name="theme-dropdown"
                                        class="!bg-none theme-controller btn btn-sm btn-block btn-ghost justify-start"
                                        aria-label="Cupcake"
-                                       data-set-theme="cupcake"
-                                       data-act-class="ACTIVECLASS"
+                                       onchange="setTheme('cupcake')"
+                                       {% if theme == 'cupcake' %}checked{% endif %}
                                        value="cupcake" />
                             </li>
                             <li>
@@ -62,8 +66,8 @@
                                        name="theme-dropdown"
                                        class="!bg-none theme-controller btn btn-sm btn-block btn-ghost justify-start"
                                        aria-label="Aqua"
-                                       data-set-theme="aqua"
-                                       data-act-class="ACTIVECLASS"
+                                       onchange="setTheme('aqua')"
+                                       {% if theme == 'aqua' %}checked{% endif %}
                                        value="aqua" />
                             </li>
                         </ul>
