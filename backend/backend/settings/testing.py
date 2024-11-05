@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount",
     "allauth",
+    "compress_staticfiles",
+    "django_browser_reload",
     "django_extensions",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -50,14 +52,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.sessions",
     "django.contrib.staticfiles",
-    "django_extensions",
-    "django_browser_reload",
-    "tailwind",
-    "frontend",
-    "compress_staticfiles",
-    "profiles",
     "slippers",
+    "tailwind",
     "widget_tweaks",
+    "frontend",
     "trading",
     "profiles",
 ]
@@ -164,6 +162,10 @@ STORAGES = {
 }
 
 TAILWIND_APP_NAME = "frontend"
+
+from shutil import which
+
+NPM_BIN_PATH = which("npm")
 
 INTERNAL_IPS = [
     "127.0.0.1",
