@@ -18,6 +18,12 @@ gunicorn = "^23.0.0"
 psycopg2 = "^2.9.10"
 django-tailwind = {extras = ["reload"], version = "^3.8.0"}
 django-compress-staticfiles = "^1.0.1b0"
+django-allauth-ui = "^1.5.1"
+django-widget-tweaks = "^1.5.0"
+slippers = "^0.6.2"
+django-allauth = {extras = ["mfa"], version = "^65.1.0"}
+requests = "^2.32.3"
+django-stubs = {extras = ["compatible-mypy"], version = "^5.1.1"}
 
 
 [tool.poetry.group.dev.dependencies]
@@ -25,6 +31,7 @@ pydotplus = "^2.0.2"
 pre-commit = "^4.0.1"
 poetry-plugin-export = "^1.8.0"
 coverage = "^7.6.4"
+celery-types = "^0.22.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -35,3 +42,10 @@ branch = true
 source = ["backend"]
 command_line = "backend/manage.py test"
 relative_files = true
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+
+[tool.django-stubs]
+django_settings_module = "backend.settings.testing"
+strict_settings = true

@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+import django_stubs_ext
+
+django_stubs_ext.monkeypatch()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -32,11 +36,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "allauth_ui",
+    "allauth.account",
+    "allauth.mfa",
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount",
+    "allauth",
+    "django_extensions",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
-    "django.contrib.sessions",
+    "django.contrib.humanize",
     "django.contrib.messages",
+    "django.contrib.sessions",
     "django.contrib.staticfiles",
     "django_extensions",
     "django_browser_reload",
@@ -44,7 +56,10 @@ INSTALLED_APPS = [
     "frontend",
     "compress_staticfiles",
     "profiles",
+    "slippers",
+    "widget_tweaks",
     "trading",
+    "profiles",
 ]
 
 MIDDLEWARE = [
@@ -54,6 +69,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
@@ -152,3 +168,29 @@ TAILWIND_APP_NAME = "frontend"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+# Allauth Configuration
+# When going to production ( allauth ) you should run python manage.py collectstatic
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",  # Needed for admin login
+    "allauth.account.auth_backends.AuthenticationBackend",  # Needed for allauth login
+]
+
+ALLAUTH_UI_THEME = "light"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+ACCOUNT_MFA_ENABLED = True
+ACCOUNT_MFA_REQUIRED = True
+ACCOUNT_MFA_MAINTENANCE_MODE = False
+ACCOUNT_MFA_TOTP_ENABLED = True
+ACCOUNT_MFA_TOTP_VALIDITY_PERIOD = 30
+ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
+
+MFA_PASSKEY_LOGIN_ENABLED = False
+MFA_WEBAUTHN_ALLOW_INSECURE_ORIGIN = False
+MFA_PASSKEY_SIGNUP_ENABLED = False

@@ -32,6 +32,7 @@ all:
       37613165616565646366386166623531386666373235623462663231336364643966633862316139
       6533
     django_hostname: aset.tedyst.ro
+    django_from_email: noreply@aset.tedyst.ro
 localhost:
   vars:
     ansible_connection: local

@@ -24,6 +24,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("healthz/", lambda request: HttpResponse("OK")),
     path("__reload__/", include("django_browser_reload.urls")),
+    path("accounts/", include("allauth.urls")),  # allauth URLs
+    path("accounts/mfa/", include("allauth.mfa.urls")),  # mfa URLs
 ]
 
 urlpatterns += profiles_urls

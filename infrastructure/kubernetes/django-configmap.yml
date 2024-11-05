@@ -4,3 +4,8 @@ metadata:
   name: django-config
 data:
   ALLOWED_HOSTS: "{{ django_hostname }}"
+  MFA_TOTP_ISSUER: "{{ django_hostname }}"
+  EMAIL_HOST: "api.sendgrid.com"
+  EMAIL_PORT: "587"
+  EMAIL_HOST_USER: "apikey"
+  DEFAULT_FROM_EMAIL: "{{ django_from_email }}"

@@ -42,3 +42,15 @@ CELERY_BROKER_URL = (
 )
 
 INTERNAL_IPS = []
+
+MFA_WEBAUTHN_ALLOW_INSECURE_ORIGIN = False
+MFA_TOTP_ISSUER = os.environ["MFA_TOTP_ISSUER"]
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = os.environ["EMAIL_HOST"]
+EMAIL_PORT = os.environ["EMAIL_PORT"]
+EMAIL_USE_TLS = bool(os.environ.get("EMAIL_USE_TLS", "True"))
+EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+DEFAULT_FROM_EMAIL = os.environ["DEFAULT_FROM_EMAIL"]
