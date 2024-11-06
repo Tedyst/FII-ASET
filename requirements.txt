@@ -4,6 +4,9 @@ amqp==5.2.0 ; python_version >= "3.12" and python_version < "4.0" \
 asgiref==3.8.1 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:3e1e3ecc849832fe52ccf2cb6686b7a55f82bb1d6aee72a58826471390335e47 \
     --hash=sha256:c343bd80a0bec947a9860adb4c432ffa7db769836c64238fc34bdc3fec84d590
+babel==2.16.0 ; python_version >= "3.12" and python_version < "4.0" \
+    --hash=sha256:368b5b98b37c06b7daf6696391c3240c938b37767d4584413e8438c5c435fa8b \
+    --hash=sha256:d1f3554ca26605fe173f3de0c65f750f5a42f924499bf134de6423582298e316
 beautifulsoup4==4.12.3 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:74e3d1928edc070d21748185c46e3fb33490f22f52a3addee9aee0f4f7781051 \
     --hash=sha256:b80878c9f40111313e55da8ba20bdba06d8fa3969fc68304167741bbf9e082ed
@@ -247,12 +250,18 @@ django-debug-toolbar==4.4.6 ; python_version >= "3.12" and python_version < "4.0
 django-extensions==3.2.3 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:44d27919d04e23b3f40231c4ab7af4e61ce832ef46d610cc650d53e68328410a \
     --hash=sha256:9600b7562f79a92cbf1fde6403c04fee314608fefbb595502e34383ae8203401
+django-money[exchange]==3.5.3 ; python_version >= "3.12" and python_version < "4.0" \
+    --hash=sha256:3020c0f6b77eb4c30bdd711c7c660af67ed4b7a4750fdbdf5894788848dc6fc6 \
+    --hash=sha256:cb8ef1adea8c682b792cc565ace45ace9525de26e3b116290951cd78c7393eab
 django-permissions-policy==4.23.0 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:11a9b481bb0cfe5925534f2edd7ce1307a4ed81d1e33c59f6b8fddb511badf74 \
     --hash=sha256:54e67d50fce3f93e5288e0e56a4292731b5dd1afe8c1322ec001b236eb21ecbe
 django-prometheus==2.3.1 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:cf9b26f7ba2e4568f08f8f91480a2882023f5908579681bcf06a4d2465f12168 \
     --hash=sha256:f9c8b6c780c9419ea01043c63a437d79db2c33353451347894408184ad9c3e1e
+django-simple-history==3.7.0 ; python_version >= "3.12" and python_version < "4.0" \
+    --hash=sha256:282cb2c4aa63f51547f17da7f2130abaa81ba01694676d19b88d52c94a57a52c \
+    --hash=sha256:ac3b7ca8b0d33f7ea6be8fe7fc98cf43415efa500ff5dfe736fbd1ebc0cf39f9
 django-stubs-ext==5.1.1 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:3907f99e178c93323e2ce908aef8352adb8c047605161f8d9e5e7b4efb5a6a9c \
     --hash=sha256:db7364e4f50ae7e5360993dbd58a3a57ea4b2e7e5bab0fbd525ccdb3e7975d1c
@@ -621,6 +630,9 @@ psycopg2==2.9.10 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:88138c8dedcbfa96408023ea2b0c369eda40fe5d75002c0964c78f46f11fa442 \
     --hash=sha256:9d5b3b94b79a844a986d029eee38998232451119ad653aea42bb9220a8c5066b \
     --hash=sha256:c6f7b8561225f9e711a9c47087388a97fdc948211c10a4bccbf0ba68ab7b3b5a
+py-moneyed==3.0 ; python_version >= "3.12" and python_version < "4.0" \
+    --hash=sha256:4906f0f02cf2b91edba2e156f2d4e9a78f224059ab8c8fa2ff26230c75d894e8 \
+    --hash=sha256:9583a14f99c05b46196193d8185206e9b73c8439fc8a5eee9cfc7e733676d9bb
 pycparser==2.22 ; python_version >= "3.12" and python_version < "4.0" and platform_python_implementation != "PyPy" \
     --hash=sha256:491c8be9c040f5390f5bf44a5b07752bd07f56edf992381b05c701439eec10f6 \
     --hash=sha256:c3702b6d3dd8c7abc1afa565d7e63d53a1d0bd86cdc24edd75470f4de499cfcc
@@ -693,6 +705,9 @@ requests==2.32.3 ; python_version >= "3.12" and python_version < "4.0" \
 sentry-sdk[celery]==2.18.0 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:0dc21febd1ab35c648391c664df96f5f79fb0d92d7d4225cd9832e53a617cafd \
     --hash=sha256:ee70e27d1bbe4cd52a38e1bd28a5fadb9b17bc29d91b5f2b97ae29c0a7610442
+setuptools==75.3.0 ; python_version >= "3.12" and python_version < "4.0" \
+    --hash=sha256:f2504966861356aa38616760c0f66568e535562374995367b4e69c7143cf6bcd \
+    --hash=sha256:fba5dd4d766e97be1b1681d98712680ae8f2f26d7881245f2ce9e40714f1a686
 six==1.16.0 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926 \
     --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254

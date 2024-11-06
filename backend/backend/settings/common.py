@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.sessions",
     "django.contrib.staticfiles",
+    "djmoney",
+    "djmoney.contrib.exchange",
+    "simple_history",
     "slippers",
     "widget_tweaks",
     "trading",
@@ -66,6 +69,7 @@ MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "csp.middleware.CSPMiddleware",
+    "simple_history.middleware.HistoryRequestMiddleware",
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -190,3 +194,5 @@ PERMISSIONS_POLICY = {
     "payment": [],
     "usb": [],
 }
+
+EXCHANGE_BACKEND = "djmoney.contrib.exchange.backends.FixerBackend"
