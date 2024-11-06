@@ -33,6 +33,7 @@ all:
       6533
     django_hostname: aset.tedyst.ro
     django_from_email: noreply@aset.tedyst.ro
+    sentry_dsn: https://f34c01aec33b7521023710a4ba33e0c9@o557174.ingest.us.sentry.io/4508247053107200
 localhost:
   vars:
     ansible_connection: local
