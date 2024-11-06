@@ -11,7 +11,7 @@
         <title>ASET Trading App</title>
         {% tailwind_css %}
     </head>
-    <body class="font-sans leading-normal tracking-normal">
+    <body class="font-sans leading-normal tracking-normal h-screen">
         <nav class="shadow-lg">
             <div class="container mx-auto px-4 py-4 flex justify-between items-center">
                 <a href="#" class="text-2xl font-bold text-blue-500">ASET-FII</a>
@@ -26,21 +26,31 @@
                 </div>
             </div>
         </nav>
-        <!-- Hero Section -->
-        <header class="bg-primary text-primary-content">
-            <div class="container mx-auto px-4 py-16 text-center">
-                <h1 class="text-4xl md:text-5xl font-bold">Welcome to ASET-FII Trading</h1>
+        <section class="bg-primary text-primary-content h-screen flex items-center justify-start"
+                 style="background-image: url('{% static 'images/background.jpg' %}');
+                        background-size: cover;
+                        background-position: center">
+            <div class="container mx-auto px-4 py-16 text-left">
+                <h1 class="text-4xl md:text-5xl font-bold">
+                    Welcome to
+                    <br>
+                    ASET-FII Trading
+                </h1>
                 <p class="mt-4 text-lg md:text-xl">Trade smarter with our browser-based trading app.</p>
-                <a href="{% url 'account_login' %}"
+                <a href="{% url 'available_actions' %}"
                    class="mt-8 inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-50">Start Trading Now</a>
+                <a href="{% url 'personal_actions' %}"
+                   class="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-50">
+                    Personal Actions
+                </a>
             </div>
-        </header>
-        <!-- Features Section -->
-        <section class="container mx-auto px-4 py-16">
+        </section>
+        <!-- Features Content (next scroll) -->
+        <section class="container mx-auto px-4 py-16 h-screen">
             <div class="text-center">
-                <h2 class="text-3xl font-bold text-base-content">Why Choose ASET?</h2>
+                <h2 class="text-3xl font-bold text-base-content">Why Choose ASET-FII Trading?</h2>
                 <p class="mt-2 text-base-content">
-                    Experience a fast, secure, and easy-to-use trading app directly in your web browser.
+                    Experience a fast, secure, and easy-to-use trading app directly in your web browser. With ASET-FII Trading, you can trade confidently and efficiently, accessing essential tools and market data on demand.
                 </p>
             </div>
             <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -55,7 +65,9 @@
                         </svg>
                     </div>
                     <h3 class="mt-4 text-xl font-semibold text-base-content">Real-Time Data</h3>
-                    <p class="mt-2 text-base-content">Get accurate and up-to-date market data at all times.</p>
+                    <p class="mt-2 text-base-content">
+                        Get accurate and up-to-date market data at all times. Our platform provides live pricing and trading information, helping you make informed decisions on the fly.
+                    </p>
                 </div>
                 <!-- Feature 2 -->
                 <div class="text-center">
@@ -68,7 +80,9 @@
                         </svg>
                     </div>
                     <h3 class="mt-4 text-xl font-semibold text-base-content">Advanced Analytics</h3>
-                    <p class="mt-2 text-base-content">Analyze market trends with our robust analytics tools.</p>
+                    <p class="mt-2 text-base-content">
+                        Analyze market trends with our robust analytics tools. Visualize historical data, track performance, and gain insights to refine your trading strategy.
+                    </p>
                 </div>
                 <!-- Feature 3 -->
                 <div class="text-center">
@@ -81,15 +95,18 @@
                         </svg>
                     </div>
                     <h3 class="mt-4 text-xl font-semibold text-base-content">Secure & Reliable</h3>
-                    <p class="mt-2 text-base-content">Trade with confidence knowing your data is secure.</p>
+                    <p class="mt-2 text-base-content">
+                        Trade with confidence knowing your data is secure. Our platform utilizes industry-leading encryption and security protocols to ensure that your transactions and personal information are always protected.
+                    </p>
                 </div>
             </div>
         </section>
         <!-- Contact & Footer Section -->
-        <footer class="bg-gray-800 text-white">
+        <footer id="footer">
             <div class="container mx-auto px-4 py-8 text-center">
-                <p class="text-gray-400">
-                    Need help? Contact us at <a href="mailto:support@tedyst.ro" class="text-blue-400 hover:underline">support@tedyst.ro</a>
+                <p class="text-gray-400 dark:text-gray-500">
+                    Need help? Contact us at <a href="mailto:support@tedyst.ro"
+    class="text-blue-400 hover:underline dark:text-blue-300">support@tedyst.ro</a>
                 </p>
             </div>
         </footer>
