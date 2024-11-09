@@ -43,9 +43,15 @@ def available_actions_list(request):
     )
 
 
-def action_info(request, action_pk: int):
+def action_info(request, symbol: str, exchange: str):
     return render(
         request,
         "action_info.html",
-        {"security": get_object_or_404(Security, pk=action_pk)},
+        {
+            "security": get_object_or_404(
+                Security.objects.prefetch_related("exchange"),
+                symbol=symbol,
+                exchange__short_name=exchange,
+            )
+        },
     )

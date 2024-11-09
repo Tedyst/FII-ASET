@@ -57,16 +57,22 @@ class Portfolio(models.Model):
 
 
 class Exchange(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, db_index=True, unique=True)
+    short_name = models.CharField(max_length=3, db_index=True, unique=True)
     url = models.URLField()
 
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.short_name:
+            self.short_name = self.name[:3].upper()
+        super().save(*args, **kwargs)
+
 
 class Security(models.Model):
     name = models.CharField(max_length=64)
-    symbol = models.CharField(max_length=16)
+    symbol = models.CharField(max_length=16, db_index=True)
     price = djmoney_fields.MoneyField(max_digits=14, decimal_places=2)
     exchange = models.ForeignKey(Exchange, on_delete=models.CASCADE)
 
@@ -76,6 +82,7 @@ class Security(models.Model):
     class Meta:
         unique_together = ["symbol", "exchange"]
         verbose_name_plural = "securities"
+        indexes = [models.Index(fields=["symbol", "exchange"])]
 
 
 class Position(models.Model):

@@ -210,7 +210,7 @@ NPM_BIN_PATH = which("npm")
 #     "default-src": ["'self'"],
 # }
 
-CSP_IMG_SRC = "'self' 'unsafe-eval'"
+CSP_IMG_SRC = "'self' data: 'unsafe-eval'"
 
 CSP_STYLE_SRC = "'self' 'unsafe-inline'"
 

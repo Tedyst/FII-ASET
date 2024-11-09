@@ -12,16 +12,16 @@
                     <h3 class="text-xl font-semibold text-primary">{{ security.name }}</h3>
                     <div class="mt-4 flex justify-start flex-col">
                         <div class="mr-4">
-                            <span class="font-semibold text-base-content">Exchange:</span> {{ security.exchange }}
+                            <span class="text-base-content">Exchange:</span> {{ security.exchange }}
                         </div>
                         <div class="mr-4">
-                            <span class="font-semibold text-base-content">Ticker:</span> {{ security.symbol }}
+                            <span class="text-base-content">Ticker:</span> {{ security.symbol }}
                         </div>
                         <div class="mr-4">
-                            <span class="font-semibold text-base-content font-bold">Price:</span> {{ security.price }}
+                            <span class="text-base-content font-bold">Price:</span> {{ security.price }}
                         </div>
                     </div>
-                    <a href="{% url 'action_info' security.id %}"
+                    <a href="{% url 'action_info' security.symbol security.exchange.short_name %}"
                        class="mt-4 inline-block bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-green-500">Buy Now</a>
                 </div>
             {% endfor %}

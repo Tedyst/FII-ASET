@@ -35,7 +35,7 @@
                             {% endif %}
                         </div>
                     </div>
-                    <a href="{% url 'action_info' position.security.id %}"
+                    <a href="{% url 'action_info' position.security.symbol position.security.exchange.short_name %}"
                        class="mt-4 inline-block bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-red-500">Sell</a>
                 </div>
             {% endfor %}
