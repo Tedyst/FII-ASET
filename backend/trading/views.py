@@ -41,3 +41,7 @@ def available_actions_list(request):
     return render(
         request, "view_available_actions.html", {"securities": Security.objects.all()}
     )
+
+
+def action_info(request):
+    return render(request, "action_info.html", {"security": Security.objects.first()})
