@@ -1,114 +1,83 @@
+{% extends "base.html" %}
 {% load static tailwind_tags %}
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description"
-              content="Trade smarter with our browser-based trading app.">
-        <meta name="keywords"
-              content="trading, stocks, finance, investment, browser-based">
-        <title>ASET Trading App</title>
-        {% tailwind_css %}
-    </head>
-    <body class="font-sans leading-normal tracking-normal h-screen">
-        <nav class="shadow-lg">
-            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-                <a href="#" class="text-2xl font-bold text-blue-500">ASET-FII</a>
-                <div class="space-x-4">
-                    {% include "components/theme_selector.html" %}
-                    <a href="{% url 'account_login' %}"
-                       class="text-blue-500 hover:text-blue-700 font-semibold">Login</a>
-                    <a href="https://github.com/Tedyst/FII-ASET"
-                       class="text-gray-700 hover:text-gray-900">GitHub</a>
-                    <a href="https://github.com/users/Tedyst/projects/1/views/2"
-                       class="text-gray-700 hover:text-gray-900">Board</a>
-                </div>
-            </div>
-        </nav>
-        <section class="bg-primary text-primary-content h-screen flex items-center justify-start"
-                 style="background-image: url('{% static 'images/background.jpg' %}');
-                        background-size: cover;
-                        background-position: center">
-            <div class="container mx-auto px-4 py-16 text-left">
-                <h1 class="text-4xl md:text-5xl font-bold">
-                    Welcome to
-                    <br>
-                    ASET-FII Trading
-                </h1>
-                <p class="mt-4 text-lg md:text-xl">Trade smarter with our browser-based trading app.</p>
-                <a href="{% url 'available_actions' %}"
-                   class="mt-8 inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-50">Start Trading Now</a>
-                <a href="{% url 'personal_actions' %}"
-                   class="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-50">
-                    Personal Actions
-                </a>
-            </div>
-        </section>
-        <!-- Features Content (next scroll) -->
-        <section class="container mx-auto px-4 py-16 h-screen">
+{% block content %}
+    <style nonce="{{request.csp_nonce}}">
+        .background-photo {
+            background-image: url('{% static 'images/background.jpg' %}');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+    <section class="bg-primary text-primary-content h-screen flex items-center justify-start background-photo">
+        <div class="container mx-auto px-4 py-16 text-left">
+            <h1 class="text-4xl md:text-5xl font-bold">
+                Welcome to
+                <br>
+                ASET-FII Trading
+            </h1>
+            <p class="mt-4 text-lg md:text-xl">Trade smarter with our browser-based trading app.</p>
+            <a href="{% url 'available_actions' %}"
+               class="mt-8 inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-50">Start Trading Now</a>
+            <a href="{% url 'personal_actions' %}"
+               class="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-50">
+                Personal Actions
+            </a>
+        </div>
+    </section>
+    <!-- Features Content (next scroll) -->
+    <section class="container mx-auto px-4 py-16">
+        <div class="text-center">
+            <h2 class="text-3xl font-bold text-base-content">Why Choose ASET-FII Trading?</h2>
+            <p class="mt-2 text-base-content">
+                Experience a fast, secure, and easy-to-use trading app directly in your web browser. With ASET-FII Trading, you can trade confidently and efficiently, accessing essential tools and market data on demand.
+            </p>
+        </div>
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
             <div class="text-center">
-                <h2 class="text-3xl font-bold text-base-content">Why Choose ASET-FII Trading?</h2>
+                <div class="bg-blue-100 p-6 rounded-full inline-block">
+                    <svg class="w-12 h-12 text-blue-600"
+                         xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 20 20"
+                         fill="currentColor">
+                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 3a1 1 0 01.993.883L11 6v4h3a1 1 0 01.117 1.993L14 12h-4a1 1 0 01-.993-.883L9 11V6a1 1 0 011-1z" />
+                    </svg>
+                </div>
+                <h3 class="mt-4 text-xl font-semibold text-base-content">Real-Time Data</h3>
                 <p class="mt-2 text-base-content">
-                    Experience a fast, secure, and easy-to-use trading app directly in your web browser. With ASET-FII Trading, you can trade confidently and efficiently, accessing essential tools and market data on demand.
+                    Get accurate and up-to-date market data at all times. Our platform provides live pricing and trading information, helping you make informed decisions on the fly.
                 </p>
             </div>
-            <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="text-center">
-                    <div class="bg-blue-100 p-6 rounded-full inline-block">
-                        <svg class="w-12 h-12 text-blue-600"
-                             xmlns="http://www.w3.org/2000/svg"
-                             viewBox="0 0 20 20"
-                             fill="currentColor">
-                            <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 3a1 1 0 01.993.883L11 6v4h3a1 1 0 01.117 1.993L14 12h-4a1 1 0 01-.993-.883L9 11V6a1 1 0 011-1z" />
-                        </svg>
-                    </div>
-                    <h3 class="mt-4 text-xl font-semibold text-base-content">Real-Time Data</h3>
-                    <p class="mt-2 text-base-content">
-                        Get accurate and up-to-date market data at all times. Our platform provides live pricing and trading information, helping you make informed decisions on the fly.
-                    </p>
+            <!-- Feature 2 -->
+            <div class="text-center">
+                <div class="bg-blue-100 p-6 rounded-full inline-block">
+                    <svg class="w-12 h-12 text-blue-600"
+                         xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 20 20"
+                         fill="currentColor">
+                        <path d="M6 3a1 1 0 011 1v12a1 1 0 01-2 0V4a1 1 0 011-1zM14 3a1 1 0 011 1v12a1 1 0 01-2 0V4a1 1 0 011-1z" />
+                    </svg>
                 </div>
-                <!-- Feature 2 -->
-                <div class="text-center">
-                    <div class="bg-blue-100 p-6 rounded-full inline-block">
-                        <svg class="w-12 h-12 text-blue-600"
-                             xmlns="http://www.w3.org/2000/svg"
-                             viewBox="0 0 20 20"
-                             fill="currentColor">
-                            <path d="M6 3a1 1 0 011 1v12a1 1 0 01-2 0V4a1 1 0 011-1zM14 3a1 1 0 011 1v12a1 1 0 01-2 0V4a1 1 0 011-1z" />
-                        </svg>
-                    </div>
-                    <h3 class="mt-4 text-xl font-semibold text-base-content">Advanced Analytics</h3>
-                    <p class="mt-2 text-base-content">
-                        Analyze market trends with our robust analytics tools. Visualize historical data, track performance, and gain insights to refine your trading strategy.
-                    </p>
-                </div>
-                <!-- Feature 3 -->
-                <div class="text-center">
-                    <div class="bg-blue-100 p-6 rounded-full inline-block">
-                        <svg class="w-12 h-12 text-blue-600"
-                             xmlns="http://www.w3.org/2000/svg"
-                             viewBox="0 0 20 20"
-                             fill="currentColor">
-                            <path d="M2 8a2 2 0 012-2h1a2 2 0 011.995 1.85L7 8v6a2 2 0 01-1.85 1.995L5 16H4a2 2 0 01-1.995-1.85L2 14V8zm12 0a2 2 0 012-2h1a2 2 0 011.995 1.85L19 8v6a2 2 0 01-1.85 1.995L17 16h-1a2 2 0 01-1.995-1.85L14 14V8z" />
-                        </svg>
-                    </div>
-                    <h3 class="mt-4 text-xl font-semibold text-base-content">Secure & Reliable</h3>
-                    <p class="mt-2 text-base-content">
-                        Trade with confidence knowing your data is secure. Our platform utilizes industry-leading encryption and security protocols to ensure that your transactions and personal information are always protected.
-                    </p>
-                </div>
-            </div>
-        </section>
-        <!-- Contact & Footer Section -->
-        <footer id="footer">
-            <div class="container mx-auto px-4 py-8 text-center">
-                <p class="text-gray-400 dark:text-gray-500">
-                    Need help? Contact us at <a href="mailto:support@tedyst.ro"
-    class="text-blue-400 hover:underline dark:text-blue-300">support@tedyst.ro</a>
+                <h3 class="mt-4 text-xl font-semibold text-base-content">Advanced Analytics</h3>
+                <p class="mt-2 text-base-content">
+                    Analyze market trends with our robust analytics tools. Visualize historical data, track performance, and gain insights to refine your trading strategy.
                 </p>
             </div>
-        </footer>
-    </body>
-</html>
+            <!-- Feature 3 -->
+            <div class="text-center">
+                <div class="bg-blue-100 p-6 rounded-full inline-block">
+                    <svg class="w-12 h-12 text-blue-600"
+                         xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 20 20"
+                         fill="currentColor">
+                        <path d="M2 8a2 2 0 012-2h1a2 2 0 011.995 1.85L7 8v6a2 2 0 01-1.85 1.995L5 16H4a2 2 0 01-1.995-1.85L2 14V8zm12 0a2 2 0 012-2h1a2 2 0 011.995 1.85L19 8v6a2 2 0 01-1.85 1.995L17 16h-1a2 2 0 01-1.995-1.85L14 14V8z" />
+                    </svg>
+                </div>
+                <h3 class="mt-4 text-xl font-semibold text-base-content">Secure & Reliable</h3>
+                <p class="mt-2 text-base-content">
+                    Trade with confidence knowing your data is secure. Our platform utilizes industry-leading encryption and security protocols to ensure that your transactions and personal information are always protected.
+                </p>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

@@ -61,6 +61,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "csp.middleware.CSPMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django_permissions_policy.PermissionsPolicyMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -70,7 +71,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "csp.middleware.CSPMiddleware",
     "simple_history.middleware.HistoryRequestMiddleware",
 ]
 
@@ -87,6 +87,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "frontend.context_processors.get_theme_from_cookie",
             ],
         },
     },
@@ -204,3 +205,15 @@ TAILWIND_APP_NAME = "frontend"
 from shutil import which
 
 NPM_BIN_PATH = which("npm")
+
+# CONTENT_SECURITY_POLICY = {
+#     "default-src": ["'self'"],
+# }
+
+CSP_IMG_SRC = "'self'"
+
+CSP_STYLE_SRC = "'self'"
+
+CSP_SCRIPT_SRC = "'self'"
+
+CSP_INCLUDE_NONCE_IN = ["script-src", "style-src"]

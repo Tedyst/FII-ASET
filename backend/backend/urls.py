@@ -20,6 +20,7 @@ from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import include, path
 from profiles.urls import urlpatterns as profiles_urls
+from trading.urls import urlpatterns as trading_urls
 
 
 def healthz(request):
@@ -35,6 +36,7 @@ urlpatterns = [
 ]
 
 urlpatterns += profiles_urls
+urlpatterns += trading_urls
 if settings.DEBUG:
     from debug_toolbar.toolbar import debug_toolbar_urls
 

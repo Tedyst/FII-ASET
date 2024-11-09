@@ -1,9 +1,4 @@
 {% load static tailwind_tags %}
-<script>
-    function setTheme(theme) {
-        document.cookie = `theme=${theme};path=/;max-age=31536000`;
-    }
-</script>
 <div class="dropdown">
     <div tabindex="0" role="button" class="btn m-1">
         Theme
@@ -22,7 +17,6 @@
                    name="theme-dropdown"
                    class="!bg-none theme-controller btn btn-sm btn-block btn-ghost justify-start"
                    aria-label="Light"
-                   onchange="setTheme('light')"
                    {% if theme == 'light' %}checked{% endif %}
                    value="light" />
         </li>
@@ -31,7 +25,6 @@
                    name="theme-dropdown"
                    class="!bg-none theme-controller btn btn-sm btn-block btn-ghost justify-start"
                    aria-label="Dark"
-                   onchange="setTheme('dark')"
                    {% if theme == 'dark' %}checked{% endif %}
                    value="dark" />
         </li>
@@ -40,7 +33,6 @@
                    name="theme-dropdown"
                    class="!bg-none theme-controller btn btn-sm btn-block btn-ghost justify-start"
                    aria-label="Cupcake"
-                   onchange="setTheme('cupcake')"
                    {% if theme == 'cupcake' %}checked{% endif %}
                    value="cupcake" />
         </li>
@@ -49,9 +41,19 @@
                    name="theme-dropdown"
                    class="!bg-none theme-controller btn btn-sm btn-block btn-ghost justify-start"
                    aria-label="Aqua"
-                   onchange="setTheme('aqua')"
                    {% if theme == 'aqua' %}checked{% endif %}
                    value="aqua" />
         </li>
     </ul>
 </div>
+<script nonce="{{request.csp_nonce}}">
+    document.getElementsByName("theme-dropdown").forEach((element) => {
+        element.addEventListener("change", (event) => {
+            setTheme(event.target.value);
+        });
+    });
+
+    function setTheme(theme) {
+        document.cookie = `theme=${theme};path=/;max-age=31536000`;
+    }
+</script>

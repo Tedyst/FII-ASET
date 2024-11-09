@@ -5,8 +5,8 @@ from simple_history.models import HistoricalRecords
 
 
 class Account(models.Model):
-    owner = models.ForeignKey("profiles.User", on_delete=models.CASCADE)
-    balance = djmoney_fields.MoneyField(max_digits=14, decimal_places=2, default_currency="USD")  # type: ignore
+    owner = models.OneToOneField("profiles.User", on_delete=models.CASCADE)
+    balance = djmoney_fields.MoneyField(max_digits=14, decimal_places=2, default_currency="USD", default="0.00")  # type: ignore
     history = HistoricalRecords()
 
     created_at = models.DateTimeField(default=timezone.now)
@@ -21,7 +21,7 @@ class Account(models.Model):
 class Transaction(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     amount = djmoney_fields.MoneyField(max_digits=14, decimal_places=2)
-    date = models.DateTimeField(null=True)
+    date = models.DateTimeField(auto_now=True)
 
     class Type(models.IntegerChoices):
         SELL = 0
@@ -33,7 +33,7 @@ class Transaction(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.account} - {Transaction.Type(self.t_type)} - transaction"
+        return f"{self.account} - {Transaction.Type(self.t_type).label} - {self.amount} - transaction"
 
 
 class Portfolio(models.Model):
@@ -71,7 +71,7 @@ class Security(models.Model):
     exchange = models.ForeignKey(Exchange, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.symbol
+        return self.name
 
     class Meta:
         unique_together = ["symbol", "exchange"]
