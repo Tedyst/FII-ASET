@@ -31,8 +31,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
     path("healthz/", healthz),
-    path("accounts/", include("allauth.urls")),  # allauth URLs
-    path("accounts/mfa/", include("allauth.mfa.urls")),  # mfa URLs
+    path("i18n/", include("django.conf.urls.i18n")),
 ]
 
 urlpatterns += profiles_urls

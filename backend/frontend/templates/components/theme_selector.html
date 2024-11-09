@@ -47,13 +47,15 @@
     </ul>
 </div>
 <script nonce="{{request.csp_nonce}}">
+    (function() {
     document.getElementsByName("theme-dropdown").forEach((element) => {
         element.addEventListener("change", (event) => {
             setTheme(event.target.value);
         });
-    });
+    })
 
     function setTheme(theme) {
         document.cookie = `theme=${theme};path=/;max-age=31536000`;
     }
+})()
 </script>
