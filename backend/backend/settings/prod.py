@@ -1,7 +1,31 @@
 import os
 
+import django.db.models.signals
+import sentry_sdk
+import sentry_sdk.integrations.celery
+import sentry_sdk.integrations.django
+
+sentry_sdk.init(
+    dsn=os.environ["SENTRY_DSN"],
+    traces_sample_rate=1.0,
+    profiles_sample_rate=1.0,
+    integrations=[
+        sentry_sdk.integrations.celery.CeleryIntegration(propagate_traces=True),
+        sentry_sdk.integrations.django.DjangoIntegration(
+            transaction_style="url",
+            middleware_spans=True,
+            signals_spans=True,
+            signals_denylist=[
+                django.db.models.signals.pre_init,
+                django.db.models.signals.post_init,
+            ],
+            cache_spans=True,
+        ),
+    ],
+)
+
 # noqa: F403,F401
-from .testing import *
+from .common import *
 
 SECRET_KEY = os.environ["SECRET_KEY"]
 DEBUG = False
@@ -53,3 +77,5 @@ EMAIL_USE_TLS = bool(os.environ.get("EMAIL_USE_TLS", "True"))
 EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
 EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
 DEFAULT_FROM_EMAIL = os.environ["DEFAULT_FROM_EMAIL"]
+
+FIXER_ACCESS_KEY = os.environ["FIXER_ACCESS_KEY"]
