@@ -217,3 +217,5 @@ CSP_STYLE_SRC = "'self' 'unsafe-inline'"
 CSP_SCRIPT_SRC = "'self'"
 
 CSP_INCLUDE_NONCE_IN = ["script-src"]
+
+LOGIN_REDIRECT_URL = "/personal-actions/"
