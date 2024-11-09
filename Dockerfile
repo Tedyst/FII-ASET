@@ -55,7 +55,9 @@ RUN apt-get update && \
     poetry install --with dev --no-interaction --no-ansi && \
     python /app/backend/manage.py tailwind install && \
     python /app/backend/manage.py tailwind build && \
-    python /app/backend/manage.py collectstatic --noinput
+    python /app/backend/manage.py collectstatic --noinput && \
+    cd /app/backend/frontend && \
+    django-admin compilemessages
 
 FROM production-base AS production
 
