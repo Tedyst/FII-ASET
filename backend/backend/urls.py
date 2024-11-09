@@ -15,17 +15,27 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import include, path
 from profiles.urls import urlpatterns as profiles_urls
 
+
+def healthz(request):
+    return HttpResponse("OK")
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("healthz/", lambda request: HttpResponse("OK")),
     path("__reload__/", include("django_browser_reload.urls")),
+    path("healthz/", healthz),
     path("accounts/", include("allauth.urls")),  # allauth URLs
     path("accounts/mfa/", include("allauth.mfa.urls")),  # mfa URLs
 ]
 
 urlpatterns += profiles_urls
+if settings.DEBUG:
+    from debug_toolbar.toolbar import debug_toolbar_urls
+
+    urlpatterns += debug_toolbar_urls()

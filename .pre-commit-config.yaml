@@ -10,11 +10,6 @@ repos:
       - id: poetry-lock
       - id: poetry-export
       - id: poetry-install
-  - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
-        name: isort (python)
   - repo: https://github.com/google/yamlfmt
     rev: v0.14.0
     hooks:

@@ -9,3 +9,4 @@ data:
   EMAIL_PORT: "587"
   EMAIL_HOST_USER: "apikey"
   DEFAULT_FROM_EMAIL: "{{ django_from_email }}"
+  SENTRY_DSN: "{{ sentry_dsn }}"
