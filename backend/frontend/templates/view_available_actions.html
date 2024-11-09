@@ -21,7 +21,7 @@
                             <span class="font-semibold text-base-content font-bold">Price:</span> {{ security.price }}
                         </div>
                     </div>
-                    <a href="#"
+                    <a href="{% url 'action_info' security.id %}"
                        class="mt-4 inline-block bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-green-500">Buy Now</a>
                 </div>
             {% endfor %}

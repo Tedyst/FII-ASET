@@ -1,7 +1,7 @@
 import logging
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Portfolio, Position, Security
 
 logger = logging.getLogger(__name__)
@@ -43,5 +43,9 @@ def available_actions_list(request):
     )
 
 
-def action_info(request):
-    return render(request, "action_info.html", {"security": Security.objects.first()})
+def action_info(request, action_pk: int):
+    return render(
+        request,
+        "action_info.html",
+        {"security": get_object_or_404(Security, pk=action_pk)},
+    )
