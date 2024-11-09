@@ -212,8 +212,8 @@ NPM_BIN_PATH = which("npm")
 
 CSP_IMG_SRC = "'self'"
 
-CSP_STYLE_SRC = "'self'"
+CSP_STYLE_SRC = "'self' 'unsafe-inline'"
 
 CSP_SCRIPT_SRC = "'self'"
 
-CSP_INCLUDE_NONCE_IN = ["script-src", "style-src"]
+CSP_INCLUDE_NONCE_IN = ["script-src"]

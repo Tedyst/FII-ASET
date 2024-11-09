@@ -57,3 +57,6 @@ plugins = ["mypy_django_plugin.main"]
 [tool.django-stubs]
 django_settings_module = "backend.settings.testing"
 strict_settings = true
+
+[tool.djlint]
+ignore = "H006"

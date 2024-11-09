@@ -59,13 +59,8 @@ module.exports = {
         require('@tailwindcss/typography'),
         require('@tailwindcss/aspect-ratio'),
         require('daisyui'),
-        require('flowbite/plugin')({
-                charts: true,
-            }),
     ],
     daisyui: {
         themes: ["light", "dark", "cupcake", "aqua"],
     },
-
-
 }

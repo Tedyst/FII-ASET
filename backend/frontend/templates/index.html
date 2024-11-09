@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static tailwind_tags %}
 {% block content %}
-    <style nonce="{{request.csp_nonce}}">
+    <style>
         .background-photo {
             background-image: url('{% static 'images/background.jpg' %}');
             background-size: cover;
