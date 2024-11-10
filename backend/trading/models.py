@@ -110,8 +110,10 @@ class Order(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     security = models.ForeignKey(Security, on_delete=models.CASCADE)
     quantity = models.DecimalField(max_digits=14, decimal_places=2)
-    price = djmoney_fields.MoneyField(max_digits=14, decimal_places=2)
     date = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        abstract = True
 
     class Type(models.IntegerChoices):
         SELL = 0
@@ -119,18 +121,6 @@ class Order(models.Model):
 
     TYPES = ((Type.SELL, "Sell"), (Type.BUY, "Buy"))
     t_type = models.SmallIntegerField(choices=TYPES)
-
-    class OrderType(models.IntegerChoices):
-        MARKET = 0
-        LIMIT = 1
-        STOP = 2
-
-    ORDER_TYPES = (
-        (OrderType.MARKET, "Market"),
-        (OrderType.LIMIT, "Limit"),
-        (OrderType.STOP, "Stop"),
-    )
-    order_type = models.SmallIntegerField(choices=ORDER_TYPES)
 
     class Status(models.IntegerChoices):
         PENDING = 0
@@ -151,28 +141,42 @@ class Order(models.Model):
     history = HistoricalRecords()
 
     @transaction.atomic
+    def cancel(self):
+        self.status = Order.Status.CANCELLED
+        self.save()
+
+    def can_fill(self):
+        if self.t_type == Order.Type.BUY:
+            return self.account.balance >= self.quantity * self.security.price
+        elif self.t_type == Order.Type.SELL:
+            position = self.account.portfolio.positions.get(security=self.security)
+            return position.quantity >= self.quantity
+
+
+class MarketOrder(Order):
+    @transaction.atomic
     def fill(self):
         self.executed_at = timezone.now()
         self.status = Order.Status.FILLED
 
         if self.t_type == Order.Type.BUY:
-            self.account.balance -= self.price * self.quantity
+            self.account.balance -= self.security.price * self.quantity
             self.account.save()
 
             position = Position(
                 portfolio=self.account.portfolio,
                 security=self.security,
                 quantity=self.quantity,
-                average_price=self.price,
+                average_price=self.security.price,
             )
             position.save()
             Transaction.objects.create(
                 account=self.account,
-                amount=self.price * self.quantity,
+                amount=self.security.price * self.quantity,
                 t_type=Transaction.Type.BUY,
             )
         elif self.t_type == Order.Type.SELL:
-            self.account.balance += self.price * self.quantity
+            self.account.balance += self.security.price * self.quantity
             self.account.save()
 
             position = self.account.portfolio.positions.get(security=self.security)
@@ -181,15 +185,44 @@ class Order(models.Model):
 
             Transaction.objects.create(
                 account=self.account,
-                amount=self.price * self.quantity,
+                amount=self.security.price * self.quantity,
                 t_type=Transaction.Type.SELL,
             )
         self.save()
 
-    @transaction.atomic
-    def cancel(self):
-        self.status = Order.Status.CANCELLED
-        self.save()
 
-    def __str__(self):
-        return f"{self.account} - {Order.Type(self.t_type)} - order"
+class LimitOrder(Order):
+    limit_price = djmoney_fields.MoneyField(max_digits=14, decimal_places=2)
+    expiration = models.DateTimeField()
+
+    def can_fill(self):
+        if self.t_type == Order.Type.BUY:
+            return super().can_fill() and self.limit_price >= self.security.price
+        elif self.t_type == Order.Type.SELL:
+            return super().can_fill() and self.limit_price <= self.security.price
+
+    def fill(self):
+        raise NotImplementedError("Limit orders are not implemented yet")
+
+
+class StopOrder(Order):
+    stop_price = djmoney_fields.MoneyField(max_digits=14, decimal_places=2)
+    expiration = models.DateTimeField()
+
+    def can_fill(self):
+        if self.t_type == Order.Type.BUY:
+            return super().can_fill() and self.stop_price >= self.security.price
+        elif self.t_type == Order.Type.SELL:
+            return super().can_fill() and self.stop_price <= self.security.price
+
+    def fill(self):
+        self.executed_at = timezone.now()
+        self.status = Order.Status.FILLED
+
+        MarketOrder.objects.create(
+            account=self.account,
+            security=self.security,
+            quantity=self.quantity,
+            t_type=self.t_type,
+        )
+        self.save()

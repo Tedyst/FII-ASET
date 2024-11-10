@@ -2,7 +2,17 @@ import simple_history.admin
 from django.contrib import admin
 
 # Register your models here.
-from .models import Account, Exchange, Order, Portfolio, Position, Security, Transaction
+from .models import (
+    Account,
+    Exchange,
+    MarketOrder,
+    LimitOrder,
+    StopOrder,
+    Portfolio,
+    Position,
+    Security,
+    Transaction,
+)
 
 
 class AccountAdmin(simple_history.admin.SimpleHistoryAdmin):
@@ -27,4 +37,6 @@ admin.site.register(Portfolio)
 admin.site.register(Exchange, ExchangeAdmin)
 admin.site.register(Security)
 admin.site.register(Position)
-admin.site.register(Order, OrderAdmin)
+admin.site.register(MarketOrder, OrderAdmin)
+admin.site.register(LimitOrder, OrderAdmin)
+admin.site.register(StopOrder, OrderAdmin)
