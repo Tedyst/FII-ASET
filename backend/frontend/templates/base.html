@@ -1,0 +1,50 @@
+{% load static tailwind_tags %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description"
+              content="Trade smarter with our browser-based trading app.">
+        <meta name="keywords"
+              content="trading, stocks, finance, investment, browser-based">
+        <title>{% translate "ASET Trading App" %}</title>
+        {% tailwind_css %}
+    </head>
+    <body class="font-sans leading-normal tracking-normal h-screen">
+        {% block header %}
+            <nav class="shadow-lg">
+                <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                    <a href="{% url 'index' %}" class="text-2xl font-bold text-blue-500">ASET-FII</a>
+                    <div class="space-x-4">
+                        {% include "components/language_selector.html" %}
+                        {% include "components/theme_selector.html" %}
+                        {% if not request.user.is_authenticated %}
+                            <a href="{% url 'account_login' %}"
+                               class="text-blue-500 hover:text-blue-700 font-semibold">{% translate "Login" %}</a>
+                        {% else %}
+                            <a href="{% url 'account_email' %}"
+                               class="text-blue-500 hover:text-blue-700 font-semibold">{% translate "Account" %}</a>
+                        {% endif %}
+                        <a href="https://github.com/Tedyst/FII-ASET" class="text-base-content">{% translate "GitHub" %}</a>
+                        <a href="https://github.com/users/Tedyst/projects/1/views/2"
+                           class="text-base-content">{% translate "Board" %}</a>
+                    </div>
+                </div>
+            </nav>
+        {% endblock header %}
+        {% block content %}
+        {% endblock content %}
+        {% block footer %}
+            <footer id="footer">
+                <div class="container mx-auto px-4 py-8 text-center">
+                    <p class="text-gray-400 dark:text-gray-500">
+                        {% translate "Need help? Contact us at" %} <a href="mailto:support@tedyst.ro"
+    class="text-blue-400 hover:underline dark:text-blue-300">support@tedyst.ro</a>
+                    </p>
+                </div>
+            </footer>
+        {% endblock footer %}
+    </body>
+</html>

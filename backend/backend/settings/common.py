@@ -17,6 +17,8 @@ import django_stubs_ext
 
 django_stubs_ext.monkeypatch()
 
+from django.utils.translation import gettext_lazy as _
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -53,23 +55,28 @@ INSTALLED_APPS = [
     "djmoney.contrib.exchange",
     "simple_history",
     "slippers",
+    "tailwind",
     "widget_tweaks",
+    "frontend",
     "trading",
     "profiles",
 ]
 
 MIDDLEWARE = [
+    "csp.middleware.CSPMiddleware",
+    "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django_permissions_policy.PermissionsPolicyMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "csp.middleware.CSPMiddleware",
     "simple_history.middleware.HistoryRequestMiddleware",
+    "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -85,6 +92,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.i18n",
+                "frontend.context_processors.get_theme_from_cookie",
             ],
         },
     },
@@ -178,11 +187,9 @@ MFA_PASSKEY_SIGNUP_ENABLED = False
 
 PERMISSIONS_POLICY = {
     "accelerometer": [],
-    "ambient-light-sensor": [],
     "autoplay": [],
     "camera": [],
     "display-capture": [],
-    "document-domain": [],
     "encrypted-media": [],
     "fullscreen": [],
     "geolocation": [],
@@ -196,3 +203,32 @@ PERMISSIONS_POLICY = {
 }
 
 EXCHANGE_BACKEND = "djmoney.contrib.exchange.backends.FixerBackend"
+
+TAILWIND_APP_NAME = "frontend"
+
+from shutil import which
+
+NPM_BIN_PATH = which("npm")
+
+# CONTENT_SECURITY_POLICY = {
+#     "default-src": ["'self'"],
+# }
+
+CSP_IMG_SRC = "'self' data: 'unsafe-eval'"
+
+CSP_STYLE_SRC = "'self' 'unsafe-inline'"
+
+CSP_SCRIPT_SRC = "'self'"
+
+CSP_INCLUDE_NONCE_IN = ["script-src"]
+
+LOGIN_REDIRECT_URL = "/personal-actions/"
+
+LANGUAGES = [
+    ("ro", _("Romana")),
+    ("en", _("English")),
+]
+
+LANGUAGE_CODE = "en"
+
+LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]

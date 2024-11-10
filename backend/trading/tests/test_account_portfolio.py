@@ -1,13 +1,12 @@
 from decimal import Decimal
 
 from django.test import TestCase
-from django.utils import timezone
 from djmoney.money import Money
 from profiles.models import User
 from trading.models import (
     Account,
     Exchange,
-    Order,
+    MarketOrder,
     Portfolio,
     Position,
     Security,
@@ -36,14 +35,12 @@ class AccountPortfolioTestCase(TestCase):
 
     def test_order_fill_buy_creates_position_and_transaction(self):
         """Test a buy order creates a position and updates balance correctly."""
-        order = Order.objects.create(
+        order = MarketOrder.objects.create(
             account=self.account,
             security=self.security,
             quantity=Decimal("10"),
-            price=Money(150, "USD"),
-            t_type=Order.Type.BUY,
-            status=Order.Status.PENDING,
-            order_type=Order.OrderType.MARKET,
+            t_type=MarketOrder.Type.BUY,
+            status=MarketOrder.Status.PENDING,
         )
 
         order.fill()
@@ -72,20 +69,18 @@ class AccountPortfolioTestCase(TestCase):
             average_price=Money(150, "USD"),
         )
 
-        order = Order.objects.create(
+        order = MarketOrder.objects.create(
             account=self.account,
             security=self.security,
             quantity=Decimal("5"),
-            price=Money(160, "USD"),
-            t_type=Order.Type.SELL,
-            status=Order.Status.PENDING,
-            order_type=Order.OrderType.MARKET,
+            t_type=MarketOrder.Type.SELL,
+            status=MarketOrder.Status.PENDING,
         )
 
         order.fill()
         # Check balance increase
         self.account.refresh_from_db()
-        self.assertEqual(self.account.balance, Money(10800, "USD"))
+        self.assertEqual(self.account.balance, Money(10750, "USD"))
 
         # Check position updated
         position = self.portfolio.positions.get(security=self.security)
@@ -95,23 +90,21 @@ class AccountPortfolioTestCase(TestCase):
         transaction = Transaction.objects.get(
             account=self.account, t_type=Transaction.Type.SELL
         )
-        self.assertEqual(transaction.amount, Money(800, "USD"))
+        self.assertEqual(transaction.amount, Money(750, "USD"))
 
     def test_order_cancellation(self):
         """Test that cancelling an order only updates its status."""
-        order = Order.objects.create(
+        order = MarketOrder.objects.create(
             account=self.account,
             security=self.security,
             quantity=Decimal("10"),
-            price=Money(150, "USD"),
-            t_type=Order.Type.BUY,
-            status=Order.Status.PENDING,
-            order_type=Order.OrderType.MARKET,
+            t_type=MarketOrder.Type.BUY,
+            status=MarketOrder.Status.PENDING,
         )
 
         order.cancel()
         order.refresh_from_db()
-        self.assertEqual(order.status, Order.Status.CANCELLED)
+        self.assertEqual(order.status, MarketOrder.Status.CANCELLED)
 
         # Account balance and portfolio should remain unchanged
         self.account.refresh_from_db()

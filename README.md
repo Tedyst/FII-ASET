@@ -62,10 +62,28 @@ poetry install --with dev
 pre-commit install
 ```
 
-After you have installed the required packages, you need to start the virtual environment by running the following command in the root directory of the project:
+If you need to also modify the HTML templates, you also need to install NPM and run the following command in the `backend` directory of the project:
+
+```bash
+python manage.py tailwind install
+```
+
+After you have installed the required packages, you need to start the virtual environment by running the following command in the `backend` directory of the project:
 
 ```bash
 poetry shell
+```
+
+If you also want to modify the translations made like this: _("text"), you need to run the following command in the `backend` directory of the project, after which you modify the translations in the `backend/locale/{lang}/LC_MESSAGES/django.po` files:
+
+```bash
+django-admin makemessages --all
+```
+
+After you have modified the translations, you need to compile them by running the following command in the `backend` directory of the project:
+
+```bash
+django-admin compilemessages
 ```
 
 ## Running the app
@@ -75,6 +93,12 @@ In order to run the app, you need to run the following command in the `backend` 
 ```bash
 python manage.py migrate
 python manage.py runserver
+```
+
+In case you want to modify the HTML templates, you also need to run the following command IN PARALLEL:
+
+```bash
+python manage.py tailwind start
 ```
 
 ## Making migrations

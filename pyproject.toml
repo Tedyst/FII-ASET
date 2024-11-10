@@ -16,6 +16,8 @@ prometheus-client = "^0.21.0"
 django-prometheus = "^2.3.1"
 gunicorn = "^23.0.0"
 psycopg2 = "^2.9.10"
+django-tailwind = {extras = ["reload"], version = "^3.8.0"}
+django-compress-staticfiles = "^1.0.1b0"
 django-allauth-ui = "^1.5.1"
 django-widget-tweaks = "^1.5.0"
 slippers = "^0.6.2"
@@ -37,6 +39,9 @@ poetry-plugin-export = "^1.8.0"
 coverage = "^7.6.4"
 celery-types = "^0.22.0"
 werkzeug = "^3.1.2"
+faker = "^30.8.2"
+django-debug-toolbar-template-profiler = "^2.1.0"
+pyflame = "^0.3.2"
 
 [build-system]
 requires = ["poetry-core"]
@@ -54,3 +59,6 @@ plugins = ["mypy_django_plugin.main"]
 [tool.django-stubs]
 django_settings_module = "backend.settings.testing"
 strict_settings = true
+
+[tool.djlint]
+ignore = "H006"

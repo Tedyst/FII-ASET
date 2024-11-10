@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static tailwind_tags %}
+{% load i18n %}
+{% block content %}
+    <section class="container mx-auto px-4 py-16">
+        <div class="text-center">
+            <h2 class="text-3xl font-bold text-secondary">Available positions</h2>
+            <p class="mt-2 text-base-content">Explore a list of all the ASET Trading positions you can trade on our platform.</p>
+        </div>
+        {% if positions|length == 0 %}
+            <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                <h3 class="text-xl font-semibold text-black">No positions available</h3>
+                <p class="mt-2 text-black">There are no positions available for trading at the moment.</p>
+            </div>
+        {% endif %}
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for position in positions %}
+                <div class="bg-base-100 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <h3 class="text-xl font-semibold text-primary">{{ position.security.name }}</h3>
+                    <div class="mt-4 flex justify-start flex-col">
+                        <div class="mr-4">
+                            <span class="font-semibold text-base-content">Quantity:</span> {{ position.quantity }}
+                        </div>
+                        <div class="mr-4">
+                            <span class="font-semibold text-base-content">Current Price:</span> {{ position.security.price }}
+                        </div>
+                        <div class="mr-4">
+                            <span class="font-semibold text-base-content">Average Price:</span> {{ position.average_price }}
+                        </div>
+                        <div>
+                            <span class="font-semibold text-base-content">Profit:</span>
+                            {% if position.profit > 0 %}
+                                <div class="text-green-500 inline-block font-bold">{{ position.profit }}</div>
+                            {% else %}
+                                <div class="text-green-500 inline-block font-bold">{{ position.profit }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <a href="{% url 'action_info' position.security.symbol position.security.exchange.short_name %}"
+                       class="mt-4 inline-block bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-red-500">Sell</a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock content %}

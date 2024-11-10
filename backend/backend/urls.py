@@ -19,6 +19,8 @@ from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import include, path
+from profiles.urls import urlpatterns as profiles_urls
+from trading.urls import urlpatterns as trading_urls
 
 
 def healthz(request):
@@ -27,11 +29,13 @@ def healthz(request):
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("__reload__/", include("django_browser_reload.urls")),
     path("healthz/", healthz),
-    path("accounts/", include("allauth.urls")),  # allauth URLs
-    path("accounts/mfa/", include("allauth.mfa.urls")),  # mfa URLs
+    path("i18n/", include("django.conf.urls.i18n")),
 ]
 
+urlpatterns += profiles_urls
+urlpatterns += trading_urls
 if settings.DEBUG:
     from debug_toolbar.toolbar import debug_toolbar_urls
 

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static tailwind_tags %}
+{% load i18n %}
+{% block content %}
+    <section class="container mx-auto px-4 py-16">
+        <div class="text-center">
+            <h2 class="text-3xl font-bold text-base-content">Available Securities</h2>
+            <p class="mt-2 text-base-content">Explore a list of all the ASET Trading Securities you can buy on our platform.</p>
+        </div>
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for security in securities %}
+                <div class="bg-base-100 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <h3 class="text-xl font-semibold text-primary">{{ security.name }}</h3>
+                    <div class="mt-4 flex justify-start flex-col">
+                        <div class="mr-4">
+                            <span class="text-base-content">Exchange:</span> {{ security.exchange }}
+                        </div>
+                        <div class="mr-4">
+                            <span class="text-base-content">Ticker:</span> {{ security.symbol }}
+                        </div>
+                        <div class="mr-4">
+                            <span class="text-base-content font-bold">Price:</span> {{ security.price }}
+                        </div>
+                    </div>
+                    <a href="{% url 'action_info' security.symbol security.exchange.short_name %}"
+                       class="mt-4 inline-block bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-green-500">Buy Now</a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock content %}
