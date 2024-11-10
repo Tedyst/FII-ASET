@@ -47,7 +47,7 @@ FROM development AS collectstatic
 COPY pyproject.toml poetry.lock /app/
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends nodejs npm && \
+    apt-get install -y --no-install-recommends nodejs npm gettext && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     pip install poetry && \
@@ -56,7 +56,7 @@ RUN apt-get update && \
     python /app/backend/manage.py tailwind install && \
     python /app/backend/manage.py tailwind build && \
     python /app/backend/manage.py collectstatic --noinput && \
-    cd /app/backend/frontend && \
+    cd /app/backend && \
     django-admin compilemessages
 
 FROM production-base AS production
