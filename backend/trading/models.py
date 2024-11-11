@@ -64,11 +64,6 @@ class Exchange(models.Model):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        if not self.short_name:
-            self.short_name = self.name[:3].upper()
-        super().save(*args, **kwargs)
-
 
 class Security(models.Model):
     name = models.CharField(max_length=64)
