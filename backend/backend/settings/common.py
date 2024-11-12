@@ -232,3 +232,5 @@ LANGUAGES = [
 LANGUAGE_CODE = "en"
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]
+
+USE_L10N = True
