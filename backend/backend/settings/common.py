@@ -208,7 +208,10 @@ TAILWIND_APP_NAME = "frontend"
 
 from shutil import which
 
-NPM_BIN_PATH = which("npm")
+if os.name == "nt":
+    NPM_BIN_PATH = which("npm.cmd")
+else:
+    NPM_BIN_PATH = which("npm")
 
 # CONTENT_SECURITY_POLICY = {
 #     "default-src": ["'self'"],
