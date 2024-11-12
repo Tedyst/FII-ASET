@@ -133,7 +133,7 @@ class Order(models.Model):
     executed_price = djmoney_fields.MoneyField(
         max_digits=14, decimal_places=2, null=True
     )
-    history = HistoricalRecords()
+    history = HistoricalRecords(inherit=True)
 
     @transaction.atomic
     def cancel(self):

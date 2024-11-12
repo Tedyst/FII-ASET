@@ -1,15 +1,17 @@
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
-from .models import Exchange
-
 import logging
 
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
+
+from .models import Exchange
+
 logger = logging.getLogger(__name__)
+
 
 @receiver(pre_save, sender=Exchange)
 def set_default_exchange_name(sender, instance, *args, **kwargs):
     if not instance.short_name:
-        instance.short_name = self.name[:3].upper()
+        instance.short_name = instance.name[:3].upper()
 
 
 @receiver(post_save)
