@@ -237,3 +237,30 @@ LANGUAGE_CODE = "en"
 LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]
 
 USE_L10N = True
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": '[%(asctime)s] \033[93m%(levelname)s @ %(filename)s#%(lineno)d "%(message)s"\033[0m',
+            "datefmt": "%d/%b/%Y %H:%M:%S",
+            "()": "backend.loggers.ExtraContextFormatter",
+        },
+        "simple": {"format": "%(levelname)s %(message)s"},
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "root": {
+            "handlers": ["console"],
+            "propagate": True,
+            "level": "DEBUG",
+        }
+    },
+}
