@@ -29,10 +29,10 @@
                         </div>
                         <div>
                             <span class="font-semibold text-base-content">Profit:</span>
-                            {% if position.profit > 0 %}
+                            {% if position.profit.amount > 0 %}
                                 <div class="text-green-500 inline-block font-bold">{{ position.profit }}</div>
                             {% else %}
-                                <div class="text-green-500 inline-block font-bold">{{ position.profit }}</div>
+                                <div class="text-red-500 inline-block font-bold">{{ position.profit }}</div>
                             {% endif %}
                         </div>
                     </div>

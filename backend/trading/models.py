@@ -1,3 +1,4 @@
+from typing import Any
 from django.db import models, transaction
 from django.utils import timezone
 from djmoney.models import fields as djmoney_fields
@@ -7,7 +8,7 @@ from simple_history.models import HistoricalRecords
 class Account(models.Model):
     owner = models.OneToOneField("profiles.User", on_delete=models.CASCADE)
     balance = djmoney_fields.MoneyField(max_digits=14, decimal_places=2, default_currency="USD", default="0.00")  # type: ignore
-    history = HistoricalRecords()
+    history: Any = HistoricalRecords()
 
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
@@ -63,11 +64,6 @@ class Exchange(models.Model):
 
     def __str__(self):
         return self.name
-
-    def save(self, *args, **kwargs):
-        if not self.short_name:
-            self.short_name = self.name[:3].upper()
-        super().save(*args, **kwargs)
 
 
 class Security(models.Model):
@@ -138,7 +134,7 @@ class Order(models.Model):
     executed_price = djmoney_fields.MoneyField(
         max_digits=14, decimal_places=2, null=True
     )
-    history = HistoricalRecords()
+    history = HistoricalRecords(inherit=True)
 
     @transaction.atomic
     def cancel(self):
