@@ -1,3 +1,4 @@
+from typing import Any
 from django.db import models, transaction
 from django.utils import timezone
 from djmoney.models import fields as djmoney_fields
@@ -7,7 +8,7 @@ from simple_history.models import HistoricalRecords
 class Account(models.Model):
     owner = models.OneToOneField("profiles.User", on_delete=models.CASCADE)
     balance = djmoney_fields.MoneyField(max_digits=14, decimal_places=2, default_currency="USD", default="0.00")  # type: ignore
-    history = HistoricalRecords()
+    history: Any = HistoricalRecords()
 
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
