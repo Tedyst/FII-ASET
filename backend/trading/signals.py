@@ -1,9 +1,9 @@
 import logging
 
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, post_delete
 from django.dispatch import receiver
 
-from .models import Exchange, Security
+from .models import Exchange, Security, Position
 from .tasks import update_security_price
 
 logger = logging.getLogger(__name__)
@@ -25,3 +25,22 @@ def update_security_price_on_create(sender, instance, created=False, *args, **kw
     if created:
         logger.info(f"Updating price for {instance.symbol}")
         update_security_price.delay(instance.pk)
+
+
+@receiver(post_save, sender=Position)
+@receiver(post_delete, sender=Position)
+def update_users_purchased(sender, instance, **kwargs):
+    """
+    Updates the `users_purchased` field on the Security model whenever a
+    Position is created, updated, or deleted.
+    """
+    security = instance.security
+    # Count the number of distinct portfolios holding this security
+    portfolios_count = (
+        Position.objects.filter(security=security)
+        .values("portfolio")
+        .distinct()
+        .count()
+    )
+    security.users_purchased = portfolios_count
+    security.save()
