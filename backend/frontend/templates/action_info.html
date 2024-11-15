@@ -23,9 +23,15 @@
                 </div>
                 <!-- Prețul acțiunii -->
                 <div class="ml-auto text-right">
-                    <span class="text-2xl font-bold text-green-500">$320.45</span>
+                    <span class="text-2xl font-bold text-green-500">{{ security.price }}</span>
                     <!-- Diferența față de ziua precedentă -->
-                    <p class="text-sm text-green-400">+0.21</p>
+                    {% if price_difference is not none %}
+                        <p class="text-sm {% if price_difference > 0 %}text-green-400{% elif price_difference < 0 %}text-red-400{% else %}text-gray-400{% endif %}">
+                            ${{ price_difference|floatformat:2 }}
+                        </p>
+                    {% else %}
+                        <p class="text-sm text-gray-400">No previous data</p>
+                    {% endif %}
                 </div>
             </div>
             <!-- Butoanele Buy și cele 2 mici, toate la același nivel -->
@@ -50,24 +56,42 @@
         <div class="max-w-2xl w-full bg-base rounded-lg shadow bg-base-100 p-4 md:p-6">
             <div class="flex justify-between">
                 <div>
-                    <h5 class="leading-none text-3xl font-bold text-info pb-2">32.4k</h5>
-                    <p class="text-base font-normal text-base-content">Users this week</p>
+                    <h5 class="leading-none text-3xl font-bold text-info pb-2">
+                        {% if users_purchased %}
+                            {% if users_purchased >= 1000 %}
+                                {{ users_purchased|floatformat:1 }}k
+                            {% else %}
+                                {{ users_purchased }}
+                            {% endif %}
+                        {% else %}
+                            No data
+                        {% endif %}
+                    </h5>
+                    <p class="text-base font-normal text-base-content">Holders</p>
                 </div>
                 <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 text-center">
-                    12%
-                    <svg class="w-3 h-3 ms-1"
-                         aria-hidden="true"
-                         xmlns="http://www.w3.org/2000/svg"
-                         fill="none"
-                         viewBox="0 0 10 14">
+                    {% if price_difference_percentage is not none %}
+                        <p class="text-sm {% if price_difference_percentage > 0 %} text-green-400 {% elif price_difference_percentage < 0 %} text-red-400 {% else %} text-gray-400 {% endif %} ">
+                            {{ price_difference_percentage|floatformat:2 }}%
+                        </p>
+                        <svg class="w-3 h-3 ms-1 {% if price_difference_percentage > 0 %} text-green-400 transform rotate-0  <!-- Rotește săgeata la 180 pentru creștere -->
+                        {% elif price_difference_percentage < 0 %}
+                            text-red-400 transform rotate-180  <!-- Săgeata rămâne în jos când scade -->
+                        {% else %}
+                            text-gray-400
+                        {% endif %}
+                        " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4" />
                     </svg>
-                </div>
+                {% else %}
+                    <p class="text-sm text-gray-400">No previous data</p>
+                {% endif %}
             </div>
-            <div id="area-chart" class="mb-8"></div>
         </div>
+        <div id="area-chart" class="mb-8"></div>
     </div>
-    <style>
+</div>
+<style>
         .apexcharts-tooltip {
             background: oklch(var(--b3)) !important;
             color: oklch(var(--bc)) !important;
@@ -76,80 +100,91 @@
             background: oklch(var(--b3)) !important;
             color: oklch(var(--bc)) !important;
         }
-    </style>
-    <script nonce="{{request.csp_nonce}}">
-const options = {
-  chart: {
-    height: "100%",
-    maxWidth: "100%",
-    type: "area",
-    fontFamily: "Inter, sans-serif",
-    dropShadow: {
-      enabled: false,
-    },
-    toolbar: {
-      show: true,
-    },
-  },
-  tooltip: {
-    enabled: true,
-    x: {
-      show: false,
-    },
-  },
-  fill: {
-    type: "gradient",
-    gradient: {
-      opacityFrom: 0.55,
-      opacityTo: 0,
-      shade: "#1C64F2",
-      gradientToColors: ["#1C64F2"],
-    },
-  },
-  dataLabels: {
-    enabled: false,
-  },
-  stroke: {
-    width: 6,
-  },
-  grid: {
-    show: false,
-    strokeDashArray: 4,
-    padding: {
-      left: 2,
-      right: 2,
-      top: 0
-    },
-  },
-  series: [
-    {
-      name: "New users",
-      data: [6500, 6418, 6456, 6526, 6356, 6456],
-      color: "#1A56DB",
-    },
-  ],
-  xaxis: {
-    categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
-    labels: {
-      show: false,
-    },
-    axisBorder: {
-      show: false,
-    },
-    axisTicks: {
-      show: false,
-    },
-  },
-  yaxis: {
-    show: false,
-  },
-}
-
-if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
-  const chart = new ApexCharts(document.getElementById("area-chart"), options);
-  chart.render();
-}
+</style>
+{{ historical_prices|json_script:"historical-prices" }}
+{{ historical_dates|json_script:"historical-dates" }}
+<script nonce="{{request.csp_nonce}}">
+      const historicalPrices = JSON.parse(document.getElementById('historical-prices').textContent);
+      const historicalDates = JSON.parse(document.getElementById('historical-dates').textContent);
 
 
-    </script>
+
+
+      console.log("Historical Prices: ", historicalPrices);
+      console.log("Historical Dates: ", historicalDates);
+
+      const options = {
+        chart: {
+          height: "100%",
+          maxWidth: "100%",
+          type: "area",
+          fontFamily: "Inter, sans-serif",
+          dropShadow: {
+            enabled: false,
+          },
+          toolbar: {
+            show: true,
+          },
+        },
+        tooltip: {
+          enabled: true,
+          x: {
+            show: false,
+          },
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            opacityFrom: 0.55,
+            opacityTo: 0,
+            shade: "#1C64F2",
+            gradientToColors: ["#1C64F2"],
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          width: 6,
+        },
+        grid: {
+          show: false,
+          strokeDashArray: 4,
+          padding: {
+            left: 2,
+            right: 2,
+            top: 0
+          },
+        },
+        series: [
+          {
+            name: "{{ security.name }} Price",
+            data: historicalPrices,
+            color: "#1A56DB",
+          },
+        ],
+        xaxis: {
+          categories: historicalDates,
+          labels: {
+            show: false,
+          },
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+        },
+        yaxis: {
+          show: false,
+        },
+      }
+
+      if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
+        const chart = new ApexCharts(document.getElementById("area-chart"), options);
+        chart.render();
+      }
+
+
+</script>
 {% endblock content %}

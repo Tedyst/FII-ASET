@@ -71,6 +71,8 @@ class Security(models.Model):
     symbol = models.CharField(max_length=16, db_index=True)
     price = djmoney_fields.MoneyField(max_digits=14, decimal_places=2)
     exchange = models.ForeignKey(Exchange, on_delete=models.CASCADE)
+    history = HistoricalRecords()
+    users_purchased = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name
