@@ -3,7 +3,7 @@ import logging
 from django.db.models.signals import post_save, pre_save, post_delete
 from django.dispatch import receiver
 
-from .models import Exchange, Security, Position
+from .models import Exchange, Security, Position, Order
 from .tasks import update_security_price
 
 logger = logging.getLogger(__name__)
@@ -44,3 +44,9 @@ def update_users_purchased(sender, instance, **kwargs):
     )
     security.users_purchased = portfolios_count
     security.save()
+
+
+@receiver(post_save, sender=Order)
+def order_status_changed(sender, instance, **kwargs):
+    if "status" in instance.get_dirty_fields():
+        logger.info(f"Order status changed: {instance} to {instance.status}")

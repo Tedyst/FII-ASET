@@ -4,7 +4,12 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from djmoney.money import Money
 from trading.models import Account
-
+from unittest.mock import patch
+from allauth.account.signals import (
+    email_changed,
+    email_confirmed,
+    email_confirmation_sent,
+)
 from .models import User
 
 
@@ -71,3 +76,51 @@ class AccountModelTests(TestCase):
         )
         self.assertIsNotNone(account.created_at)
         self.assertIsNotNone(account.updated_at)
+
+
+class SignalTests(TestCase):
+
+    @patch("profiles.signals.logger")
+    def test_email_confirmation_sent_signal(self, mock_logger):
+        email_address = "test@example.com"
+        confirmation = type(
+            "Confirmation",
+            (object,),
+            {
+                "email_address": type(
+                    "EmailAddress", (object,), {"email": email_address}
+                )
+            },
+        )
+        email_confirmation_sent.send(
+            sender=None, request=None, confirmation=confirmation, signup=False
+        )
+        mock_logger.info.assert_called_with(
+            f"Email confirmation sent to: {email_address}"
+        )
+
+    @patch("profiles.signals.logger")
+    def test_email_confirmed_signal(self, mock_logger):
+        email_address = type("EmailAddress", (object,), {"email": "test@example.com"})
+        email_confirmed.send(sender=None, request=None, email_address=email_address)
+        mock_logger.info.assert_called_with(
+            f"Email confirmed for: {email_address.email}"
+        )
+
+    @patch("profiles.signals.logger")
+    def test_email_changed_signal(self, mock_logger):
+        user = User.objects.create(username="testuser")
+        from_email_address = type(
+            "EmailAddress", (object,), {"email": "old@example.com"}
+        )
+        to_email_address = type("EmailAddress", (object,), {"email": "new@example.com"})
+        email_changed.send(
+            sender=None,
+            request=None,
+            user=user,
+            from_email_address=from_email_address,
+            to_email_address=to_email_address,
+        )
+        mock_logger.info.assert_called_with(
+            f"Email changed for user: {user.username} from {from_email_address.email} to {to_email_address.email}"
+        )
