@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-09 21:22+0200\n"
+"POT-Creation-Date: 2024-11-16 15:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,13 +19,48 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
 "2:1));\n"
 
-#: backend/settings/common.py:228
+#: backend/settings/common.py:229
 msgid "Romana"
 msgstr "Romana"
 
-#: backend/settings/common.py:229
+#: backend/settings/common.py:230
 msgid "English"
 msgstr "English"
+
+#: frontend/templates/action_info.html:22
+msgid "Stock symbol:"
+msgstr "Simbol bursier: "
+
+#: frontend/templates/action_info.html:33
+#: frontend/templates/action_info.html:87
+msgid "No previous data"
+msgstr "Fără date anterioare"
+
+#: frontend/templates/action_info.html:41
+#, fuzzy
+#| msgid "Buy Now"
+msgid "Buy"
+msgstr "Cumpara acum"
+
+#: frontend/templates/action_info.html:42
+msgid "Sell"
+msgstr "Vinde"
+
+#: frontend/templates/action_info.html:47
+msgid "Price Alert"
+msgstr "Alertă de preț"
+
+#: frontend/templates/action_info.html:49
+msgid "Share"
+msgstr "Distribuie"
+
+#: frontend/templates/action_info.html:67
+msgid "No data"
+msgstr "Fără date"
+
+#: frontend/templates/action_info.html:70
+msgid "Holders"
+msgstr "Deținători"
 
 #: frontend/templates/base.html:12
 msgid "ASET Trading App"
@@ -50,3 +85,110 @@ msgstr "Bordul"
 #: frontend/templates/base.html:43
 msgid "Need help? Contact us at"
 msgstr "Ai nevoie de ajutor? Contacteaza-ne la"
+
+#: frontend/templates/index.html:15
+msgid "Welcome to"
+msgstr "Bun venit la"
+
+#: frontend/templates/index.html:17
+msgid "ASET-FII Tradingg"
+msgstr "ASET Aplicatie de Trading"
+
+#: frontend/templates/index.html:19
+msgid "Trade smarter with our browser-based trading app."
+msgstr ""
+"Tranzacționează mai inteligent cu aplicația noastră de tranzacționare bazată "
+"pe browser."
+
+#: frontend/templates/index.html:21
+msgid "Start Trading Now"
+msgstr "Începe să tranzacționezi acum"
+
+#: frontend/templates/index.html:24
+msgid "Personal Actions"
+msgstr "Acțiuni personale"
+
+#: frontend/templates/index.html:31
+msgid "Why Choose ASET-FII Trading?"
+msgstr "De ce să alegi ASET-FII Aplicatie de Trading"
+
+#: frontend/templates/index.html:33
+msgid ""
+"Experience a fast, secure, and easy-to-use trading app directly in your web "
+"browser. With ASET-FII Trading, you can trade confidently and efficiently, "
+"accessing essential tools and market data on demand."
+msgstr ""
+"Descoperă o aplicație de tranzacționare rapidă, sigură și ușor de utilizat "
+"direct în browserul tău web. Cu ASET-FII Trading, poți tranzacționa cu "
+"încredere și eficiență, având acces la instrumente esențiale și date de "
+"piață la cerere."
+
+#: frontend/templates/index.html:47
+msgid "Real-Time Data"
+msgstr "Date in timp real"
+
+#: frontend/templates/index.html:49
+msgid ""
+"Get accurate and up-to-date market data at all times. Our platform provides "
+"live pricing and trading information, helping you make informed decisions on "
+"the fly."
+msgstr ""
+"Obține date de piață precise și actualizate în orice moment. Platforma "
+"noastră oferă informații în timp real despre prețuri și tranzacții, ajutându-"
+"te să iei decizii informate rapid."
+
+#: frontend/templates/index.html:62
+msgid "Advanced Analytics"
+msgstr "Analiză avansată"
+
+#: frontend/templates/index.html:64
+msgid ""
+"Analyze market trends with our robust analytics tools. Visualize historical "
+"data, track performance, and gain insights to refine your trading strategy."
+msgstr ""
+"Analizează tendințele pieței cu ajutorul instrumentelor noastre de analiză "
+"performante. Vizualizează date istorice, urmărește performanța și obține "
+"informații pentru a-ți optimiza strategia de tranzacționare."
+
+#: frontend/templates/index.html:77
+msgid "Secure & Reliable"
+msgstr "Sigur și de încredere"
+
+#: frontend/templates/index.html:79
+msgid ""
+"Trade with confidence knowing your data is secure. Our platform utilizes "
+"industry-leading encryption and security protocols to ensure that your "
+"transactions and personal information are always protected."
+msgstr ""
+"Tranzacționează cu încredere, știind că datele tale sunt în siguranță. "
+"Platforma noastră utilizează criptare de top și protocoale de securitate "
+"avansate pentru a asigura protecția tranzacțiilor și a informațiilor tale "
+"personale în orice moment."
+
+#: frontend/templates/view_available_actions.html:7
+msgid "Available Securities"
+msgstr "Titluri disponibile"
+
+#: frontend/templates/view_available_actions.html:8
+msgid ""
+"Explore a list of all the ASET Trading Securities you can buy on our "
+"platform."
+msgstr ""
+"Explorează lista tuturor titlurilor de valoare disponibile pe platforma ASET "
+"Trading pe care le poți cumpăra."
+
+#: frontend/templates/view_available_actions.html:16
+msgid "Exchange:"
+msgstr "Bursă:"
+
+#: frontend/templates/view_available_actions.html:19
+msgid "Ticker:"
+msgstr "Simbol bursier:"
+
+#: frontend/templates/view_available_actions.html:22
+msgid "Price:"
+msgstr "Pret:"
+
+#: frontend/templates/view_available_actions.html:26
+msgid "Buy Now"
+msgstr "Cumpara acum"
