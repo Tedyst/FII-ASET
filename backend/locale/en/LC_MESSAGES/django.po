@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-09 21:22+0200\n"
+"POT-Creation-Date: 2024-11-16 15:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,13 +18,48 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: backend/settings/common.py:228
+#: backend/settings/common.py:229
 msgid "Romana"
 msgstr "Romana"
 
-#: backend/settings/common.py:229
+#: backend/settings/common.py:230
 msgid "English"
 msgstr "English"
+
+#: frontend/templates/action_info.html:22
+msgid "Stock symbol:"
+msgstr "Ticker: "
+
+#: frontend/templates/action_info.html:33
+#: frontend/templates/action_info.html:87
+msgid "No previous data"
+msgstr "No previous data"
+
+#: frontend/templates/action_info.html:41
+#, fuzzy
+#| msgid "Buy Now"
+msgid "Buy"
+msgstr "Buy Now"
+
+#: frontend/templates/action_info.html:42
+msgid "Sell"
+msgstr "Sell"
+
+#: frontend/templates/action_info.html:47
+msgid "Price Alert"
+msgstr "Price Alert"
+
+#: frontend/templates/action_info.html:49
+msgid "Share"
+msgstr "Share"
+
+#: frontend/templates/action_info.html:67
+msgid "No data"
+msgstr "No data"
+
+#: frontend/templates/action_info.html:70
+msgid "Holders"
+msgstr "Holders"
 
 #: frontend/templates/base.html:12
 msgid "ASET Trading App"
@@ -49,3 +84,105 @@ msgstr "Board"
 #: frontend/templates/base.html:43
 msgid "Need help? Contact us at"
 msgstr "Need help? Contact us at"
+
+#: frontend/templates/index.html:15
+msgid "Welcome to"
+msgstr "Welcome to"
+
+#: frontend/templates/index.html:17
+msgid "ASET-FII Tradingg"
+msgstr "ASET Trading App"
+
+#: frontend/templates/index.html:19
+msgid "Trade smarter with our browser-based trading app."
+msgstr "Trade smarter with our browser-based trading app."
+
+#: frontend/templates/index.html:21
+msgid "Start Trading Now"
+msgstr "Start Trading Now"
+
+#: frontend/templates/index.html:24
+msgid "Personal Actions"
+msgstr "Personal Actions"
+
+#: frontend/templates/index.html:31
+msgid "Why Choose ASET-FII Trading?"
+msgstr "Why Choose ASET-FII Trading"
+
+#: frontend/templates/index.html:33
+msgid ""
+"Experience a fast, secure, and easy-to-use trading app directly in your web "
+"browser. With ASET-FII Trading, you can trade confidently and efficiently, "
+"accessing essential tools and market data on demand."
+msgstr ""
+"Experience a fast, secure, and easy-to-use trading app directly in your web "
+"browser. With ASET-FII Trading, you can trade confidently and efficiently, "
+"accessing essential tools and market data on demand."
+
+#: frontend/templates/index.html:47
+msgid "Real-Time Data"
+msgstr "Real-Time Data"
+
+#: frontend/templates/index.html:49
+msgid ""
+"Get accurate and up-to-date market data at all times. Our platform provides "
+"live pricing and trading information, helping you make informed decisions on "
+"the fly."
+msgstr ""
+"Get accurate and up-to-date market data at all times. Our platform provides "
+"live pricing and trading information, helping you make informed decisions on "
+"the fly."
+
+#: frontend/templates/index.html:62
+msgid "Advanced Analytics"
+msgstr "Advanced Analytics"
+
+#: frontend/templates/index.html:64
+msgid ""
+"Analyze market trends with our robust analytics tools. Visualize historical "
+"data, track performance, and gain insights to refine your trading strategy."
+msgstr ""
+"Analyze market trends with our robust analytics tools. Visualize historical "
+"data, track performance, and gain insights to refine your trading strategy."
+
+#: frontend/templates/index.html:77
+msgid "Secure & Reliable"
+msgstr "Secure & Reliable"
+
+#: frontend/templates/index.html:79
+msgid ""
+"Trade with confidence knowing your data is secure. Our platform utilizes "
+"industry-leading encryption and security protocols to ensure that your "
+"transactions and personal information are always protected."
+msgstr ""
+"Trade with confidence knowing your data is secure. Our platform utilizes "
+"industry-leading encryption and security protocols to ensure that your "
+"transactions and personal information are always protected."
+
+#: frontend/templates/view_available_actions.html:7
+msgid "Available Securities"
+msgstr "Available Securities"
+
+#: frontend/templates/view_available_actions.html:8
+msgid ""
+"Explore a list of all the ASET Trading Securities you can buy on our "
+"platform."
+msgstr ""
+"Explore a list of all the ASET Trading Securities you can buy on our "
+"platform."
+
+#: frontend/templates/view_available_actions.html:16
+msgid "Exchange:"
+msgstr "Exchange:"
+
+#: frontend/templates/view_available_actions.html:19
+msgid "Ticker:"
+msgstr "Ticker:"
+
+#: frontend/templates/view_available_actions.html:22
+msgid "Price:"
+msgstr "Price:"
+
+#: frontend/templates/view_available_actions.html:26
+msgid "Buy Now"
+msgstr "Buy Now"
