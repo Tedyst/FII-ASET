@@ -65,7 +65,7 @@ CELERY_BROKER_URL = (
     f"amqp://{RABBITMQ_USER}:{RABBITMQ_PASSWORD}@{RABBITMQ_URL}/{RABBITMQ_VHOST}"
 )
 
-INTERNAL_IPS = []
+INTERNAL_IPS: list[str] = []
 
 MFA_WEBAUTHN_ALLOW_INSECURE_ORIGIN = False
 MFA_TOTP_ISSUER = os.environ["MFA_TOTP_ISSUER"]
@@ -80,3 +80,15 @@ EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
 DEFAULT_FROM_EMAIL = os.environ["DEFAULT_FROM_EMAIL"]
 
 FIXER_ACCESS_KEY = os.environ["FIXER_ACCESS_KEY"]
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": f"redis://{os.environ['REDIS_HOST']}:6379",
+        "OPTIONS": {
+            "PASSWORD": os.environ["REDIS_PASSWORD"],
+            "DB": int(os.environ.get("REDIS_DB", 0)),
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}

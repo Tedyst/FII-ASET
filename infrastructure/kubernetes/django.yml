@@ -18,6 +18,10 @@ spec:
     metadata:
       labels:
         app: django
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "7999"
+      prometheus.io/path: "/metrics"
     spec:
       automountServiceAccountToken: false
       containers:
@@ -88,6 +92,14 @@ spec:
                   name: django-rabbitmq-user-user-credentials
                   key: password
                   namespace: default
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secret
+                  key: password
+                  namespace: default
+            - name: REDIS_HOST
+              value: redis-replication.databases.svc.cluster.local
             - name: RABBITMQ_VHOST
               value: django
           imagePullPolicy: Always

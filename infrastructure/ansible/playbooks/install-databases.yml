@@ -7,6 +7,13 @@
           kind: Namespace
           metadata:
             name: databases
+    - name: Create a namespace monitoring
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: monitoring
     - name: Add postgres-operator-charts repo
       kubernetes.core.helm_repository:
         name: postgres-operator-charts
@@ -42,4 +49,33 @@
       delay: 5
       until: rabbitmq_cluster.failed == false
       register: rabbitmq_cluster
+      debugger: on_failed
+    - name: Add redis-operator repo
+      kubernetes.core.helm_repository:
+        name: ot-helm
+        repo_url: "https://ot-container-kit.github.io/helm-charts/"
+    - name: Install Redis Operator
+      kubernetes.core.helm:
+        name: redis-operator
+        chart_ref: ot-helm/redis-operator
+        release_namespace: databases
+    - name: Create redis secret
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: redis-secret
+            namespace: databases
+          data:
+            password: "{{ redis_password | b64encode }}"
+    - name: Deploy the Redis Cluster
+      kubernetes.core.k8s:
+        definition: "{{ lookup('file', '../../kubernetes/redis.yml') }}"
+        state: present
+        namespace: databases
+      retries: 10
+      delay: 5
+      until: redis_cluster.failed == false
+      register: redis_cluster
       debugger: on_failed

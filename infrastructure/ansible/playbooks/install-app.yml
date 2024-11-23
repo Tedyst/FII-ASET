@@ -15,6 +15,16 @@
     - name: Debug current deployed tag
       debug:
         var: current_tag
+    - name: Create redis secret
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: redis-secret
+            namespace: default
+          data:
+            password: "{{ redis_password | b64encode }}"
     - name: Apply the Django ConfigMap
       kubernetes.core.k8s:
         template: "../../kubernetes/django-configmap.yml"
