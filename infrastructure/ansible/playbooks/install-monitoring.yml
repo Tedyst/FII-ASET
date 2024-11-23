@@ -1,0 +1,132 @@
+- hosts: localhost
+  tasks:
+    - name: Create a namespace monitoring
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: monitoring
+    - name: Add prometheus Helm repo
+      kubernetes.core.helm_repository:
+        name: prometheus-community
+        repo_url: "https://prometheus-community.github.io/helm-charts"
+    - name: Deploy Prometheus inside the monitoring namespace
+      kubernetes.core.helm:
+        name: prometheus
+        chart_ref: prometheus-community/prometheus
+        release_namespace: monitoring
+        values:
+          server:
+            global:
+              scrape_interval: 15s
+              evaluation_interval: 15s
+          serverFiles:
+            alerting_rules.yml: "{{ lookup('file','../../config/prometheus-alerts.yml') | from_yaml }}"
+    - name: Add grafana Helm repo
+      kubernetes.core.helm_repository:
+        name: grafana
+        repo_url: "https://grafana.github.io/helm-charts"
+    - name: Deploy Grafana inside the monitoring namespace
+      kubernetes.core.helm:
+        name: grafana
+        chart_ref: grafana/grafana
+        release_namespace: monitoring
+        values:
+          ingress:
+            enabled: true
+            hosts:
+              - aset.tedyst.ro
+            path: /grafana
+          adminPassword: "{{ grafana_password }}"
+          auth:
+            anonymous:
+              enabled: false
+          datasources:
+            datasources.yaml:
+              apiVersion: 1
+              datasources:
+                - name: Prometheus
+                  type: prometheus
+                  access: proxy
+                  orgId: 1
+                  url: http://prometheus-server.monitoring.svc.cluster.local
+                  isDefault: true
+                  version: 1
+                  editable: true
+          grafana.ini:
+            server:
+              domain: "aset.tedyst.ro"
+              root_url: "https://aset.tedyst.ro/grafana"
+              serve_from_sub_path: true
+          dashboardProviders:
+            dashboardproviders.yaml:
+              apiVersion: 1
+              providers:
+                - name: default
+                  orgId: 1
+                  folder:
+                  type: file
+                  disableDeletion: true
+                  editable: false
+                  options:
+                    path: /var/lib/grafana/dashboards/default
+          dashboards:
+            default:
+              node-exporter:
+                gnetId: 1860
+                revision: 37
+                datasource: Prometheus
+              rabbitmq-overview:
+                gnetId: 10991
+                revision: 14
+                datasource: Prometheus
+              traefik:
+                gnetId: 4475
+                revision: 5
+                datasource: Prometheus
+              postgres:
+                gnetId: 9628
+                revision: 7
+                datasource: Prometheus
+    - name: Add celery-exporter Helm repo
+      kubernetes.core.helm_repository:
+        name: celery-exporter
+        repo_url: "https://danihodovic.github.io/celery-exporter/"
+    - name: Get RabbitMQ credentials from the secret
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Secret
+        namespace: monitoring
+        name: celery-exporter-rabbitmq-user-user-credentials
+      register: rabbitmq_secret
+    - name: Create celery-exporter connection string
+      set_fact:
+        celery_connection_string: "amqp://{{ rabbitmq_secret['resources'][0]['data']['username'] | b64decode }}:{{ rabbitmq_secret['resources'][0]['data']['password'] | b64decode }}@rabbitmq-cluster.databases.svc.cluster.local:5672/django"
+    - name: Create celery-exporter secret
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: celery-exporter
+            namespace: monitoring
+          data:
+            connection_string: "{{ celery_connection_string | b64encode }}"
+    - name: Deploy Celery-exporter inside the monitoring namespace
+      kubernetes.core.helm:
+        name: celery-exporter
+        chart_ref: celery-exporter/celery-exporter
+        release_namespace: monitoring
+        values:
+          env:
+            - name: CE_BROKER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: celery-exporter
+                  key: connection_string
+          podAnnotations:
+            prometheus.io/scrape: "true"
+            prometheus.io/port: "9808"
+            prometheus.io/path: "/metrics"
+          replicaCount: 1
