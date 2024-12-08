@@ -224,3 +224,36 @@ class StopOrder(Order):
             t_type=self.t_type,
         )
         self.save()
+
+
+class ExternalMarketOrder(models.Model):
+    order = models.ForeignKey(MarketOrder, on_delete=models.CASCADE)
+    metadata = models.JSONField()
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.order} - external order"
+
+    def is_filled(self):
+        return False
+
+
+class ExternalMarketHolding(models.Model):
+    external_market_order = models.ForeignKey(
+        ExternalMarketOrder, on_delete=models.CASCADE
+    )
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.external_market_order} - external holding"
+
+
+class Tax(models.Model):
+    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE)
+    amount = djmoney_fields.MoneyField(max_digits=14, decimal_places=2)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.transaction} - tax"

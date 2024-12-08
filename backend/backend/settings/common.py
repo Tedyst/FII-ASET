@@ -262,3 +262,6 @@ LOGGING = {
         }
     },
 }
+
+
+TAX_PERCENT = 0.1
