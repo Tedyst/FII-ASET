@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "djmoney.contrib.exchange",
     "simple_history",
     "slippers",
+    "cachalot",
     "tailwind",
     "widget_tweaks",
     "frontend",
