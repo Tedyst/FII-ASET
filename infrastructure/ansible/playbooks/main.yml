@@ -12,3 +12,4 @@
 - import_playbook: build-docker-images.yml
 - import_playbook: install-app.yml
 - import_playbook: install-monitoring.yml
+- import_playbook: install-autoscaler.yml
