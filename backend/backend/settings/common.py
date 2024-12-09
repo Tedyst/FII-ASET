@@ -223,7 +223,7 @@ CSP_SCRIPT_SRC = "'self'"
 
 CSP_INCLUDE_NONCE_IN = ["script-src"]
 
-LOGIN_REDIRECT_URL = "/personal-actions/"
+LOGIN_REDIRECT_URL = "/"
 
 LANGUAGES = [
     ("ro", _("Romana")),
