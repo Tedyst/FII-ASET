@@ -4,11 +4,13 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from .models import Portfolio, Position, Security
 import json
+from profiles.decorators import documents_approved_required
 
 logger = logging.getLogger(__name__)
 
 
 @login_required
+@documents_approved_required
 def personal_actions_list(request) -> HttpResponse:
     positions = (
         Position.objects.prefetch_related("security")
@@ -38,12 +40,14 @@ def personal_actions_list(request) -> HttpResponse:
     )
 
 
+@documents_approved_required
 def available_actions_list(request):
     return render(
         request, "view_available_actions.html", {"securities": Security.objects.all()}
     )
 
 
+@documents_approved_required
 def action_info(request, symbol: str, exchange: str):
     # Găsim obiectul Security folosind get_object_or_404
     security = get_object_or_404(

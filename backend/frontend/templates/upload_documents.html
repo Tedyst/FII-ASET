@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static tailwind_tags %}
+{% load i18n %}
+{% block title %}
+    Upload Documents
+{% endblock title %}
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <h2 class="text-2xl font-bold text-blue-500 mb-4">{% translate "Upload Documents" %}</h2>
+        <form method="post"
+              enctype="multipart/form-data"
+              class="space-y-4 bg-white shadow-lg rounded-lg p-6">
+            {% csrf_token %}
+            <div class="space-y-4">
+                <div class="mb-4">
+                    <label for="{{ form.identity_card_image.id_for_label }}"
+                           class="block text-sm font-medium text-gray-700">
+                        {% translate "Identity Card Image" %}
+                    </label>
+                    {{ form.identity_card_image }}
+                    {% if form.identity_card_image.errors %}
+                        <p class="text-red-500 text-xs italic">{{ form.identity_card_image.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.bank_statement_image.id_for_label }}"
+                           class="block text-sm font-medium text-gray-700">
+                        {% translate "Bank Statement Image" %}
+                    </label>
+                    {{ form.bank_statement_image }}
+                    {% if form.bank_statement_image.errors %}
+                        <p class="text-red-500 text-xs italic">{{ form.bank_statement_image.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.iban.id_for_label }}"
+                           class="block text-sm font-medium text-gray-700">{% translate "IBAN" %}</label>
+                    {{ form.iban }}
+                    {% if form.iban.errors %}<p class="text-red-500 text-xs italic">{{ form.iban.errors }}</p>{% endif %}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.personal_uid.id_for_label }}"
+                           class="block text-sm font-medium text-gray-700">
+                        {% translate "National Identifier" %}
+                    </label>
+                    {{ form.personal_uid }}
+                    {% if form.personal_uid.errors %}<p class="text-red-500 text-xs italic">{{ form.personal_uid.errors }}</p>{% endif %}
+                </div>
+            </div>
+            <button type="submit"
+                    class="mt-8 inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-50">
+                {% translate "Submit" %}
+            </button>
+        </form>
+    </div>
+{% endblock content %}
