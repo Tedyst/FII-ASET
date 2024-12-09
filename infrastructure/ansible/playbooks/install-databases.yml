@@ -14,6 +14,13 @@
           kind: Namespace
           metadata:
             name: monitoring
+    - name: Create a namespace autoscaler
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: autoscaler
     - name: Add postgres-operator-charts repo
       kubernetes.core.helm_repository:
         name: postgres-operator-charts
