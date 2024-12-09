@@ -55,30 +55,39 @@ def market_making_market_orders():
                 if buy_order.status != Order.Status.PENDING:
                     continue
                 if sell_order.quantity == buy_order.quantity:
+                    logger.info(
+                        f"Matched {sell_order} with {buy_order} for {sell_order.security}"
+                    )
                     sell_order.fill()
                     buy_order.fill()
                     break
                 elif sell_order.quantity > buy_order.quantity:
-                    Order.objects.create(
-                        account=buy_order.account,
-                        security=buy_order.security,
-                        t_type=Order.Type.BUY,
+                    logger.info(
+                        f"Matched {buy_order} with {sell_order} for {sell_order.security}. Leftover quantity: {sell_order.quantity - buy_order.quantity}"
+                    )
+                    MarketOrder.objects.create(
+                        account=sell_order.account,
+                        security=sell_order.security,
+                        t_type=Order.Type.SELL,
                         quantity=sell_order.quantity - buy_order.quantity,
                         status=Order.Status.PENDING,
                     )
-                    sell_order.quantity -= buy_order.quantity
+                    sell_order.quantity = buy_order.quantity
                     sell_order.fill()
                     buy_order.fill()
                     break
                 elif sell_order.quantity < buy_order.quantity:
-                    Order.objects.create(
-                        account=sell_order.account,
-                        security=sell_order.security,
-                        t_type=Order.Type.SELL,
-                        quantity=buy_order.quantity - sell_order.quantity,
-                        status=Order.Status.PENDING,
+                    logger.info(
+                        f"Matched {sell_order} with {buy_order} for {sell_order.security}. Leftover quantity: {buy_order.quantity - sell_order.quantity}"
                     )
-                    buy_order.quantity -= sell_order.quantity
+                    MarketOrder.objects.create(
+                        account=buy_order.account,
+                        security=buy_order.security,
+                        t_type=MarketOrder.Type.BUY,
+                        quantity=buy_order.quantity - sell_order.quantity,
+                        status=MarketOrder.Status.PENDING,
+                    )
+                    buy_order.quantity = sell_order.quantity
                     sell_order.fill()
                     buy_order.fill()
                     break

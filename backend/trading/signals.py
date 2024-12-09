@@ -60,6 +60,6 @@ def extract_tax(sender, instance, created=False, **kwargs):
     if created:
         logger.info(f"Extracting tax for {instance}")
         tax = settings.TAX_PERCENT * instance.amount
-        Tax.objects.create(amount=tax, transaction=instance, account=instance.account)
+        Tax.objects.create(amount=tax, transaction=instance)
         instance.account.balance -= tax
         instance.account.save()
