@@ -224,7 +224,7 @@ CSP_SCRIPT_SRC = "'self'"
 
 CSP_INCLUDE_NONCE_IN = ["script-src"]
 
-LOGIN_REDIRECT_URL = "/personal-actions/"
+LOGIN_REDIRECT_URL = "/"
 
 LANGUAGES = [
     ("ro", _("Romana")),
@@ -264,5 +264,8 @@ LOGGING = {
     },
 }
 
+# document images
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 TAX_PERCENT = 0.1

@@ -1,7 +1,7 @@
 import logging
 
 from django.db.models.signals import post_save, pre_save
-from django.dispatch import receiver
+from django.dispatch import Signal, receiver
 from .models import User
 from allauth.account.signals import (
     email_changed,
@@ -37,3 +37,23 @@ def email_changed_handler(
     logger.info(
         f"Email changed for user: {user.username} from {from_email_address.email} to {to_email_address.email}"
     )
+
+
+documents_submitted = Signal()
+documents_approved = Signal()
+documents_rejected = Signal()
+
+
+@receiver(documents_submitted)
+def handle_documents_submitted(sender, user, **kwargs):
+    logger.info(f"Documents submitted for verification by user: {user.username}")
+
+
+@receiver(documents_approved)
+def handle_documents_approved(sender, user, **kwargs):
+    logger.info(f"Documents approved for user: {user.username}")
+
+
+@receiver(documents_rejected)
+def handle_documents_rejected(sender, user, **kwargs):
+    logger.info(f"Documents rejected for user: {user.username}")

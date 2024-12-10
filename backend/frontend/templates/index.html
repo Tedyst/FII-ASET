@@ -14,15 +14,32 @@
             <h1 class="text-4xl md:text-5xl font-bold">
                 {% translate "Welcome to" %}
                 <br>
-                {% translate "ASET-FII Tradingg" %}
+                {% translate "ASET-FII Trading" %}
             </h1>
             <p class="mt-4 text-lg md:text-xl">{% translate "Trade smarter with our browser-based trading app." %}</p>
-            <a href="{% url 'available_actions' %}"
-               class="mt-8 inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-50">{% translate "Start Trading Now" %}</a>
-            <a href="{% url 'personal_actions' %}"
-               class="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-50">
-                {% translate "Personal Actions" %}
-            </a>
+            {% if request.user.is_authenticated %}
+                {% if request.user.is_verified %}
+                    <a href="{% url 'available_actions' %}"
+                       class="mt-8 inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-50">{% translate "Start Trading Now" %}</a>
+                    <a href="{% url 'personal_actions' %}"
+                       class="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-50">
+                        {% translate "Personal Actions" %}
+                    </a>
+                {% else %}
+                    <span class="mt-8 inline-block bg-gray-400 text-gray-600 font-semibold px-6 py-3 rounded-lg shadow-lg cursor-not-allowed">{% translate "Start Trading Now" %}</span>
+                    <span class="inline-block bg-gray-400 text-gray-600 font-semibold px-6 py-3 rounded-lg shadow-lg cursor-not-allowed">
+                        {% translate "Personal Actions" %}
+                    </span>
+                    <p class="mt-4 text-lg md:text-xl text-red-500">
+                        {% translate "Your documents are not yet approved. Please wait for admin approval." %}
+                    </p>
+                    <a href="{% url 'upload_documents' %}"
+                       class="mt-4 inline-block bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-700">{% translate "Upload Documents" %}</a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'account_login' %}"
+                   class="mt-8 inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-50">{% translate "Login to Start Trading" %}</a>
+            {% endif %}
         </div>
     </section>
     <!-- Features Content (next scroll) -->

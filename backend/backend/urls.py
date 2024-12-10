@@ -21,6 +21,7 @@ from django.http import HttpResponse
 from django.urls import include, path
 from profiles.urls import urlpatterns as profiles_urls
 from trading.urls import urlpatterns as trading_urls
+from django.conf.urls.static import static
 
 
 def healthz(request):
@@ -32,7 +33,7 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path("healthz/", healthz),
     path("i18n/", include("django.conf.urls.i18n")),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += profiles_urls
 urlpatterns += trading_urls
