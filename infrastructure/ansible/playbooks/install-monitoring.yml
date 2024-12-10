@@ -23,6 +23,22 @@
               evaluation_interval: 15s
           serverFiles:
             alerting_rules.yml: "{{ lookup('file','../../config/prometheus-alerts.yml') | from_yaml }}"
+          extraScrapeConfigs: |
+            - job_name: 'prometheus-blackbox-exporter-http'
+              metrics_path: /probe
+              params:
+                module: [http_2xx]
+              static_configs:
+                - targets:
+                  - http://{{ django_hostname }}/
+                  - https://{{ django_hostname }}/
+              relabel_configs:
+                - source_labels: [__address__]
+                  target_label: __param_target
+                - source_labels: [__param_target]
+                  target_label: instance
+                - target_label: __address__
+                  replacement: blackbox-exporter-prometheus-blackbox-exporter:9115
     - name: Add grafana Helm repo
       kubernetes.core.helm_repository:
         name: grafana
@@ -53,7 +69,15 @@
                   url: http://prometheus-server.monitoring.svc.cluster.local
                   isDefault: true
                   version: 1
-                  editable: true
+                  editable: false
+                - name: Loki
+                  type: loki
+                  access: proxy
+                  orgId: 1
+                  url: http://loki.monitoring.svc.cluster.local:3100
+                  isDefault: false
+                  version: 1
+                  editable: false
           grafana.ini:
             server:
               domain: "aset.tedyst.ro"
@@ -130,3 +154,81 @@
             prometheus.io/port: "9808"
             prometheus.io/path: "/metrics"
           replicaCount: 1
+    - name: Deploy Grafana Loki inside the monitoring repository (Single Binary)
+      kubernetes.core.helm:
+        name: loki
+        chart_ref: grafana/loki
+        release_namespace: monitoring
+        values:
+          resultsCache:
+            enabled: false
+          chunksCache:
+            enabled: false
+          loki:
+            auth_enabled: false
+            commonConfig:
+              replication_factor: 1
+            schemaConfig:
+              configs:
+                - from: "2024-04-01"
+                  store: tsdb
+                  object_store: s3
+                  schema: v13
+                  index:
+                    prefix: loki_index_
+                    period: 24h
+            pattern_ingester:
+              enabled: true
+            limits_config:
+              allow_structured_metadata: true
+              volume_enabled: true
+              retention_period: 672h # 28 days retention
+            compactor:
+              retention_enabled: true
+              delete_request_store: s3
+            ruler:
+              enable_api: true
+          minio:
+            enabled: true
+          deploymentMode: SingleBinary
+          singleBinary:
+            replicas: 1
+          # Zero out replica counts of other deployment modes
+          backend:
+            replicas: 0
+          read:
+            replicas: 0
+          write:
+            replicas: 0
+          ingester:
+            replicas: 0
+          querier:
+            replicas: 0
+          queryFrontend:
+            replicas: 0
+          queryScheduler:
+            replicas: 0
+          distributor:
+            replicas: 0
+          compactor:
+            replicas: 0
+          indexGateway:
+            replicas: 0
+          bloomCompactor:
+            replicas: 0
+          bloomGateway:
+            replicas: 0
+    - name: Deploy Grafana Promtail inside the monitoring repository
+      kubernetes.core.helm:
+        name: promtail
+        chart_ref: grafana/promtail
+        release_namespace: monitoring
+        values:
+          promtail:
+            clients:
+              - url: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
+    - name: Deploy Blackbox Exporter inside the monitoring repository
+      kubernetes.core.helm:
+        name: blackbox-exporter
+        chart_ref: prometheus-community/prometheus-blackbox-exporter
+        release_namespace: monitoring

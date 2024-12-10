@@ -1,0 +1,103 @@
+- hosts: localhost
+  tasks:
+    - name: Create a namespace autoscaler
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: autoscaler
+    - name: Add KEDA Helm repo
+      kubernetes.core.helm_repository:
+        name: kedacore
+        repo_url: "https://kedacore.github.io/charts"
+    - name: Get RabbitMQ credentials from the secret
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Secret
+        namespace: autoscaler
+        name: keda-rabbitmq-user-user-credentials
+      register: rabbitmq_secret
+    - name: Create keda connection string
+      set_fact:
+        keda_connection_string: "http://{{ rabbitmq_secret['resources'][0]['data']['username'] | b64decode }}:{{ rabbitmq_secret['resources'][0]['data']['password'] | b64decode }}@rabbitmq-cluster.databases.svc.cluster.local:15672/django"
+    - name: Deploy KEDA inside the autoscaler namespace
+      kubernetes.core.helm:
+        name: keda
+        chart_ref: kedacore/keda
+        release_namespace: autoscaler
+    - name: Create the RabbitMQ secret for KEDA
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: keda-rabbitmq-secret
+            namespace: autoscaler
+          stringData:
+            host: "{{ keda_connection_string }}"
+    - name: Create the ClusterTriggerAuthentication and Secret for RabbitMQ
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: keda.sh/v1alpha1
+          kind: ClusterTriggerAuthentication
+          metadata:
+            name: rabbitmq-credentials
+            namespace: autoscaler
+          spec:
+            secretTargetRef:
+              - parameter: host
+                name: keda-rabbitmq-secret
+                key: host
+    - name: Create the Django ScaledObject
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: keda.sh/v1alpha1
+          kind: ScaledObject
+          metadata:
+            name: django-scaledobject
+            namespace: default
+          spec:
+            scaleTargetRef:
+              name: django-deploy
+            minReplicaCount: 2
+            maxReplicaCount: 10
+            triggers:
+              - type: prometheus
+                metadata:
+                  serverAddress: http://prometheus-server.monitoring.svc.cluster.local
+                  metricName: django_http_requests_total
+                  threshold: '500'
+                  query: sum(increase(django_http_requests_total_by_transport_total[1m]))
+    - name: Create the Celery ScaledObject
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: keda.sh/v1alpha1
+          kind: ScaledObject
+          metadata:
+            name: celery-scaledobject
+            namespace: default
+          spec:
+            scaleTargetRef:
+              name: celery-deploy
+            minReplicaCount: 1
+            maxReplicaCount: 10
+            triggers:
+              - type: rabbitmq
+                metadata:
+                  queueName: celery
+                  mode: MessageRate
+                  value: '20'
+                authenticationRef:
+                  name: rabbitmq-credentials
+                  kind: ClusterTriggerAuthentication
+                  namespace: autoscaler
+              - type: rabbitmq
+                metadata:
+                  queueName: celery
+                  mode: QueueLength
+                  value: '100'
+                authenticationRef:
+                  name: rabbitmq-credentials
+                  kind: ClusterTriggerAuthentication
+                  namespace: autoscaler

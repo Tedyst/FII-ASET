@@ -366,14 +366,17 @@ cryptography==44.0.0 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:f677e1268c4e23420c3acade68fac427fffcb8d19d7df95ed7ad17cdef8404f4
 csscompressor==0.9.5 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:afa22badbcf3120a4f392e4d22f9fff485c044a1feda4a950ecc5eba9dd31a05
-django-allauth-ui==1.5.2 ; python_version >= "3.12" and python_version < "4.0" \
-    --hash=sha256:4e2908c4313b3f0317cae292b31fc9f7fbe716d6d4a9d5b01be3bccdd0c70170 \
-    --hash=sha256:f249d96cdf859f298213308862440174a28db9fda2e9195de9f7bcad993c9455
+django-allauth-ui==1.5.3 ; python_version >= "3.12" and python_version < "4.0" \
+    --hash=sha256:ac880ce6003b7953fbfc0b04b5e64607b94bd2d778c16cf108fcdb67278955c5 \
+    --hash=sha256:adb5c142232bc1fc097158e0367eccc3785afd20c97e5d257cc3e04f3ca90fda
 django-allauth[mfa]==65.3.0 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:92e0242724af03458b05b88c5fa798b01112ab22a86d873a8a9fd8f0ec57bbbf
 django-browser-reload==1.17.0 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:3667939cde0eee1a6d698dbe3b78cf10b573dabc4e711fb7933f1ba91fb98da4 \
     --hash=sha256:d372c12c1c5962c02279a53cac7e8a020c48f104592c637a06d0768b28d2d6be
+django-cachalot==2.7.0 ; python_version >= "3.12" and python_version < "4.0" \
+    --hash=sha256:834b95d5cffdc8953018a33a4e16ef63c8cfe2226a4dc36573e8bf3d62130175 \
+    --hash=sha256:a96fa16a25dc07110770d0bde0b01b444c065c7693d4c162c75da9e447f1750c
 django-compress-staticfiles==1.0.1b0 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:ce6b9b766cda23c77ef1072846a60de856b4c1c29519d3e57c6cffe7281d7f04 \
     --hash=sha256:ec44f3065f07880c919ce998da7932519decf518c6baba565394853a8685f737

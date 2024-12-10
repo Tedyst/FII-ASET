@@ -132,9 +132,9 @@ class Order(models.Model):
     )
     status = models.SmallIntegerField(choices=STATUSES, default=Status.PENDING)
 
-    executed_at = models.DateTimeField(null=True)
+    executed_at = models.DateTimeField(null=True, blank=True)
     executed_price = djmoney_fields.MoneyField(
-        max_digits=14, decimal_places=2, null=True
+        max_digits=14, decimal_places=2, null=True, blank=True
     )
     history = HistoricalRecords(inherit=True)
 
@@ -147,8 +147,8 @@ class Order(models.Model):
         if self.t_type == Order.Type.BUY:
             return self.account.balance >= self.quantity * self.security.price
         elif self.t_type == Order.Type.SELL:
-            position = self.account.portfolio.positions.get(security=self.security)
-            return position.quantity >= self.quantity
+            positions = self.account.portfolio.positions.filter(security=self.security)
+            return sum([position.quantity for position in positions]) >= self.quantity
 
 
 class MarketOrder(Order):
@@ -161,13 +161,12 @@ class MarketOrder(Order):
             self.account.balance -= self.security.price * self.quantity
             self.account.save()
 
-            position = Position(
+            position = Position.objects.create(
                 portfolio=self.account.portfolio,
                 security=self.security,
                 quantity=self.quantity,
                 average_price=self.security.price,
             )
-            position.save()
             Transaction.objects.create(
                 account=self.account,
                 amount=self.security.price * self.quantity,
@@ -177,9 +176,18 @@ class MarketOrder(Order):
             self.account.balance += self.security.price * self.quantity
             self.account.save()
 
-            position = self.account.portfolio.positions.get(security=self.security)
-            position.quantity -= self.quantity
-            position.save()
+            positions = self.account.portfolio.positions.filter(
+                security=self.security
+            ).order_by("created_at")
+            left_quantity = self.quantity
+            for position in positions:
+                if position.quantity >= left_quantity:
+                    position.quantity -= left_quantity
+                    position.save()
+                    break
+                else:
+                    left_quantity -= position.quantity
+                    position.delete()
 
             Transaction.objects.create(
                 account=self.account,
@@ -224,3 +232,36 @@ class StopOrder(Order):
             t_type=self.t_type,
         )
         self.save()
+
+
+class ExternalMarketOrder(models.Model):
+    order = models.ForeignKey(MarketOrder, on_delete=models.CASCADE)
+    metadata = models.JSONField(null=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.order} - external order"
+
+    def is_filled(self):
+        return False
+
+
+class ExternalMarketHolding(models.Model):
+    external_market_order = models.ForeignKey(
+        ExternalMarketOrder, on_delete=models.CASCADE
+    )
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.external_market_order} - external holding"
+
+
+class Tax(models.Model):
+    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE)
+    amount = djmoney_fields.MoneyField(max_digits=14, decimal_places=2)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.transaction} - tax"

@@ -1,9 +1,11 @@
 import logging
 
+from django.conf import settings
+from django.db import transaction
 from django.db.models.signals import post_save, pre_save, post_delete
 from django.dispatch import receiver
 
-from .models import Exchange, Security, Position, Order
+from .models import Exchange, Security, Position, Order, Tax, Transaction
 from .tasks import update_security_price
 
 logger = logging.getLogger(__name__)
@@ -50,3 +52,14 @@ def update_users_purchased(sender, instance, **kwargs):
 def order_status_changed(sender, instance, **kwargs):
     if "status" in instance.get_dirty_fields():
         logger.info(f"Order status changed: {instance} to {instance.status}")
+
+
+@receiver(post_save, sender=Transaction)
+@transaction.atomic
+def extract_tax(sender, instance, created=False, **kwargs):
+    if created:
+        logger.info(f"Extracting tax for {instance}")
+        tax = settings.TAX_PERCENT * instance.amount
+        Tax.objects.create(amount=tax, transaction=instance)
+        instance.account.balance -= tax
+        instance.account.save()

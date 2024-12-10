@@ -5,12 +5,15 @@ from django.contrib import admin
 from .models import (
     Account,
     Exchange,
+    ExternalMarketHolding,
+    ExternalMarketOrder,
     MarketOrder,
     LimitOrder,
     StopOrder,
     Portfolio,
     Position,
     Security,
+    Tax,
     Transaction,
 )
 
@@ -40,3 +43,6 @@ admin.site.register(Position)
 admin.site.register(MarketOrder, OrderAdmin)
 admin.site.register(LimitOrder, OrderAdmin)
 admin.site.register(StopOrder, OrderAdmin)
+admin.site.register(ExternalMarketHolding)
+admin.site.register(ExternalMarketOrder)
+admin.site.register(Tax)
