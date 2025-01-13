@@ -151,3 +151,39 @@ class AccountPortfolioTestCase(TestCase):
         self.assertEqual(
             self.portfolio.value(), Money(1500, "USD") + Money(13500, "USD")
         )
+
+    def test_buy_security_view(self):
+        """Test the buy_security view."""
+        self.client.force_login(self.user)
+        response = self.client.post(
+            "/buy-security/",
+            {
+                "symbol": self.security.symbol,
+                "exchange": self.security.exchange.short_name,
+                "quantity": 1,
+            },
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["status"], "success")
+
+    def test_sell_security_view(self):
+        """Test the sell_security view."""
+        self.client.force_login(self.user)
+        Position.objects.create(
+            portfolio=self.portfolio,
+            security=self.security,
+            quantity=Decimal("10"),
+            average_price=Money(150, "USD"),
+        )
+        response = self.client.post(
+            "/sell-security/",
+            {
+                "symbol": self.security.symbol,
+                "exchange": self.security.exchange.short_name,
+                "quantity": 1,
+            },
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["status"], "success")
