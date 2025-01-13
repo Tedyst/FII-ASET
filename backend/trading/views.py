@@ -1,8 +1,8 @@
 import logging
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
-from .models import Portfolio, Position, Security
+from .models import Portfolio, Position, Security, MarketOrder
 import json
 from profiles.decorators import documents_approved_required
 
@@ -95,7 +95,66 @@ def action_info(request, symbol: str, exchange: str):
         "price_difference": price_difference,
         "price_difference_percentage": price_difference_percentage,
         "users_purchased": users_purchased,
+        "csrf_token": request.COOKIES.get('csrftoken'),
     }
 
     # Returnează răspunsul împreună cu contextul completat
     return render(request, "action_info.html", context)
+
+
+@login_required
+@documents_approved_required
+def buy_security(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        symbol = data.get('symbol')
+        exchange = data.get('exchange')
+        quantity = data.get('quantity')
+
+        security = get_object_or_404(Security, symbol=symbol, exchange__short_name=exchange)
+        account = request.user.account
+
+        order = MarketOrder.objects.create(
+            account=account,
+            security=security,
+            quantity=quantity,
+            t_type=MarketOrder.Type.BUY,
+            status=MarketOrder.Status.PENDING,
+        )
+
+        if order.can_fill():
+            order.fill()
+            return JsonResponse({'status': 'success', 'message': 'Buy order filled successfully.'})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Insufficient funds or other issue.'})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+
+
+@login_required
+@documents_approved_required
+def sell_security(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        symbol = data.get('symbol')
+        exchange = data.get('exchange')
+        quantity = data.get('quantity')
+
+        security = get_object_or_404(Security, symbol=symbol, exchange__short_name=exchange)
+        account = request.user.account
+
+        order = MarketOrder.objects.create(
+            account=account,
+            security=security,
+            quantity=quantity,
+            t_type=MarketOrder.Type.SELL,
+            status=MarketOrder.Status.PENDING,
+        )
+
+        if order.can_fill():
+            order.fill()
+            return JsonResponse({'status': 'success', 'message': 'Sell order filled successfully.'})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Insufficient holdings or other issue.'})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
