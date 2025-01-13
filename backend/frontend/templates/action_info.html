@@ -42,7 +42,7 @@
                             class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xl py-3 px-6 rounded w-full">
                         {% translate "Buy" %}
                     </button>
-                    <button onclick="togglePopup('buy')"
+                    <button onclick="togglePopup('sell')"
                             class="bg-red-600 hover:bg-red-700 text-white font-semibold text-xl py-3 px-6 rounded w-full">
                         {% translate "Sell" %}
                     </button>
@@ -69,21 +69,68 @@
                     <div class="label">
                         <span class="label-text"></span>
                     </div>
+                    {% comment %} <input type="number"
+        placeholder="Price"
+        class="input input-bordered w-full max-w-xs mt-2"
+        name="price" /> {% endcomment %}
                     <input type="number"
-                           placeholder="Price"
-                           class="input input-bordered w-full max-w-xs"
-                           name="price" />
+                           placeholder="Quantity"
+                           class="input input-bordered w-full max-w-xs mt-2"
+                           name="quantity" />
                 </label>
-                <select class="select w-full max-w-xs" name="type">
-                    <option disabled selected>Select Order Type</option>
-                    <option>Market Order</option>
-                    <option>Limit Order</option>
-                    <option>Stop Order</option>
+                <select class="select w-full max-w-xs mt-2" name="order_type">
+                    <option disabled>Select Order Type</option>
+                    <option selected>Market Order</option>
+                    {% comment %} <option>Limit Order</option> {% endcomment %}
+                    {% comment %} <option>Stop Order</option> {% endcomment %}
                 </select>
+                <button class="btn btn-primary mt-4" type="submit">Submit</button>
             </div>
+            <input type="hidden" name="security" value="{{ security.id }}">
+            <input type="hidden" name="type" value="buy" id="ord_type">
             {% csrf_token %}
         </form>
     </dialog>
+    <!-- User Orders Table -->
+    <div class="flex justify-center mb-8">
+        <div class="max-w-2xl w-full bg-base rounded-lg shadow p-4 md:p-6">
+            <h3 class="text-lg font-semibold text-info mb-4">{% translate "Your Orders" %}</h3>
+            <table class="table-auto w-full">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2">{% translate "Type" %}</th>
+                        <th class="px-4 py-2">{% translate "Quantity" %}</th>
+                        <th class="px-4 py-2">{% translate "Date" %}</th>
+                        <th class="px-4 py-2">{% translate "Status" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td class="border px-4 py-2">
+                                {% if order.t_type == 1 %}
+                                    {% translate "Buy" %}
+                                {% else %}
+                                    {% translate "Sell" %}
+                                {% endif %}
+                            </td>
+                            <td class="border px-4 py-2">{{ order.quantity }}</td>
+                            <td class="border px-4 py-2">{{ order.date }}</td>
+                            <td class="border px-4 py-2">
+                                {% if order.status == 0 %}
+                                    {% translate "Pending" %}
+                                {% elif order.status == 1 %}
+                                    {% translate "Filled" %}
+                                {% else %}
+                                    {% translate "Cancelled" %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
     <!-- GRAFIC -->
     <div class="flex justify-center">
         <div class="max-w-2xl w-full bg-base rounded-lg shadow bg-base-100 p-4 md:p-6">
@@ -139,10 +186,13 @@
 <script nonce="{{request.csp_nonce}}">
     function togglePopup(type) {
         const title = document.getElementById('modal-title');
+        const ord_type = document.getElementById('ord_type');
         if (type === 'buy') {
             title.textContent = "{% translate 'Buy Stock' %}";
+            ord_type.value = 'buy';
         } else if (type === 'sell') {
             title.textContent = "{% translate 'Sell Stock' %}";
+            ord_type.value = 'sell';
         }
         my_modal_1.showModal();
     }
