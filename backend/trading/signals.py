@@ -5,6 +5,8 @@ from django.db import transaction
 from django.db.models.signals import post_save, pre_save, post_delete
 from django.dispatch import receiver
 
+from djmoney.money import Money
+
 from .models import Exchange, Security, Position, Order, Tax, Transaction
 from .tasks import update_security_price
 
@@ -24,7 +26,7 @@ def log_saved_models(sender, instance, created=False, *args, **kwargs):
 
 @receiver(post_save, sender=Security)
 def update_security_price_on_create(sender, instance, created=False, *args, **kwargs):
-    if created:
+    if created and not settings.TESTING:
         logger.info(f"Updating price for {instance.symbol}")
         update_security_price.delay(instance.pk)
 
@@ -57,7 +59,7 @@ def order_status_changed(sender, instance, **kwargs):
 @receiver(post_save, sender=Transaction)
 @transaction.atomic
 def extract_tax(sender, instance, created=False, **kwargs):
-    if created:
+    if created and instance.amount > Money(0, instance.amount.currency):
         logger.info(f"Extracting tax for {instance}")
         tax = settings.TAX_PERCENT * instance.amount
         Tax.objects.create(amount=tax, transaction=instance)

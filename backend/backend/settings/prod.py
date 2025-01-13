@@ -92,3 +92,5 @@ CACHES = {
         },
     }
 }
+
+TESTING = False

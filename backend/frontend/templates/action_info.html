@@ -38,10 +38,12 @@
             <div class="mt-4 flex items-center justify-between">
                 <!-- Butonul Buy (mare) -->
                 <div class="w-1/3 flex flex-row gap-1">
-                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xl py-3 px-6 rounded w-full">
+                    <button onclick="togglePopup('buy')"
+                            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xl py-3 px-6 rounded w-full">
                         {% translate "Buy" %}
                     </button>
-                    <button class="bg-red-600 hover:bg-red-700 text-white font-semibold text-xl py-3 px-6 rounded w-full">
+                    <button onclick="togglePopup('buy')"
+                            class="bg-red-600 hover:bg-red-700 text-white font-semibold text-xl py-3 px-6 rounded w-full">
                         {% translate "Sell" %}
                     </button>
                 </div>
@@ -59,6 +61,29 @@
             </div>
         </div>
     </div>
+    <dialog id="my_modal_1" class="modal">
+        <form method="post" action="{% url 'create_option' %}">
+            <div class="modal-box">
+                <h3 class="text-lg font-bold" id="modal-title"></h3>
+                <label class="form-control w-full max-w-xs">
+                    <div class="label">
+                        <span class="label-text"></span>
+                    </div>
+                    <input type="number"
+                           placeholder="Price"
+                           class="input input-bordered w-full max-w-xs"
+                           name="price" />
+                </label>
+                <select class="select w-full max-w-xs" name="type">
+                    <option disabled selected>Select Order Type</option>
+                    <option>Market Order</option>
+                    <option>Limit Order</option>
+                    <option>Stop Order</option>
+                </select>
+            </div>
+            {% csrf_token %}
+        </form>
+    </dialog>
     <!-- GRAFIC -->
     <div class="flex justify-center">
         <div class="max-w-2xl w-full bg-base rounded-lg shadow bg-base-100 p-4 md:p-6">
@@ -111,6 +136,17 @@
 </style>
 {{ historical_prices|json_script:"historical-prices" }}
 {{ historical_dates|json_script:"historical-dates" }}
+<script nonce="{{request.csp_nonce}}">
+    function togglePopup(type) {
+        const title = document.getElementById('modal-title');
+        if (type === 'buy') {
+            title.textContent = "{% translate 'Buy Stock' %}";
+        } else if (type === 'sell') {
+            title.textContent = "{% translate 'Sell Stock' %}";
+        }
+        my_modal_1.showModal();
+    }
+</script>
 <script nonce="{{request.csp_nonce}}">
       const historicalPrices = JSON.parse(document.getElementById('historical-prices').textContent);
       const historicalDates = JSON.parse(document.getElementById('historical-dates').textContent);

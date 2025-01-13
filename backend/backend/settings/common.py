@@ -269,3 +269,5 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 TAX_PERCENT = 0.1
+
+TESTING = True
