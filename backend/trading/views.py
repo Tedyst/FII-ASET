@@ -1,8 +1,9 @@
 import logging
+from django import forms
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
-from .models import Portfolio, Position, Security
+from django.shortcuts import redirect, render, get_object_or_404
+from .models import MarketOrder, Order, Portfolio, Position, Security
 import json
 from profiles.decorators import documents_approved_required
 
@@ -61,6 +62,10 @@ def action_info(request, symbol: str, exchange: str):
         "-history_date"
     )[:100]
 
+    user_orders = MarketOrder.objects.filter(
+        security=security, account__owner=request.user
+    ).all()
+
     # Pregătește datele pentru grafic în format JSON
     historical_prices = [
         float(record.price.amount) for record in price_history
@@ -95,7 +100,44 @@ def action_info(request, symbol: str, exchange: str):
         "price_difference": price_difference,
         "price_difference_percentage": price_difference_percentage,
         "users_purchased": users_purchased,
+        "orders": user_orders,
     }
 
-    # Returnează răspunsul împreună cu contextul completat
     return render(request, "action_info.html", context)
+
+
+class CreateOptionForm(forms.Form):
+    security = forms.IntegerField()
+    quantity = forms.IntegerField()
+    price = forms.IntegerField(required=False)
+    type = forms.CharField(required=False)
+    order_type = forms.CharField(required=False)
+
+
+@login_required
+def create_option(request):
+    if request.method == "POST":
+        form = CreateOptionForm(request.POST)
+        if form.is_valid():
+            account = request.user.account
+            security = Security.objects.get(id=form.cleaned_data["security"])
+            quantity = form.cleaned_data["quantity"]
+            order_type = form.cleaned_data["type"]
+            order = MarketOrder.objects.create(
+                account=account,
+                security=security,
+                quantity=quantity,
+                t_type=(
+                    MarketOrder.Type.BUY
+                    if order_type == "buy"
+                    else MarketOrder.Type.SELL
+                ),
+            )
+            order.save()
+            return redirect(
+                "action_info",
+                symbol=security.symbol,
+                exchange=security.exchange.short_name,
+            )
+        return HttpResponse(form.errors)
+    return HttpResponse("Invalid form data")

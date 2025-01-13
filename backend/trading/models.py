@@ -73,7 +73,7 @@ class Security(models.Model):
     exchange = models.ForeignKey(Exchange, on_delete=models.CASCADE)
     history = HistoricalRecords()
     users_purchased = models.PositiveIntegerField(default=0)
-
+    description = models.TextField(null=True, blank=True)
     def __str__(self):
         return self.name
 

@@ -1,12 +1,14 @@
 from django.test import TestCase
-from ..models import Portfolio, Position, Security
+from ..models import Exchange, Portfolio, Position, Security
+from djmoney.money import Money
 
 
 class SecurityUsersPurchasedSignalTest(TestCase):
     def test_users_purchased_updates_on_position_change(self):
+        exchange = Exchange.objects.create(name="Test Exchange")
         # Setup
         security = Security.objects.create(
-            name="Test Stock", symbol="TEST", price="100.00"
+            name="Test Stock", symbol="TEST", price=Money(100, "USD"), exchange=exchange
         )
         portfolio1 = Portfolio.objects.create(name="Portfolio 1")
         portfolio2 = Portfolio.objects.create(name="Portfolio 2")

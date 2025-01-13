@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from djmoney.money import Money
 from profiles.models import User
 from trading.models import (
@@ -14,6 +14,7 @@ from trading.models import (
 )
 
 
+@override_settings(TAX_PERCENT=0)
 class AccountPortfolioTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create(username="testuser")
