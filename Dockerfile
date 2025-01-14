@@ -47,7 +47,7 @@ FROM development AS collectstatic
 COPY pyproject.toml poetry.lock /app/
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends nodejs npm gettext && \
+    apt-get install -y --no-install-recommends nodejs npm gettext ca-certificates && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     pip install poetry && \
